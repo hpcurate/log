@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LOG">
+  <meta name="theme-color" content="#0e0e0e">
+  <title>LOG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e0e; --s1: #161616; --s2: #1e1e1e; --bd: #272727;
+      --y: #e4d63a; --yd: rgba(228,214,58,.13);
+      --tx: #dedede; --mu: #4a4a4a;
+      --gr: #5cdb7d; --re: #e06060;
+      --mono: 'DM Mono','Courier New',monospace;
+      --head: 'Syne',sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--tx); font-family: var(--mono); font-size: 14px; min-height: 100dvh; overscroll-behavior: none; }
+
+    .scr { display: none; min-height: 100dvh; padding-bottom: 52px; }
+    .scr.on { display: block; }
+
+    .hd { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--bd); padding: 14px 18px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+    .hd-back { background: none; border: none; color: var(--y); font: 12px/1 var(--mono); cursor: pointer; letter-spacing: .06em; padding: 4px 0; }
+    .hd-title { font: 800 15px/1 var(--head); letter-spacing: .1em; text-transform: uppercase; }
+
+    .h-meta { font: 700 10px/1 var(--head); letter-spacing: .16em; text-transform: uppercase; color: var(--mu); padding: 30px 18px 10px; }
+    .h-logo { font: 800 54px/1 var(--head); letter-spacing: -.02em; padding: 0 18px 30px; }
+    .h-logo em { color: var(--y); font-style: normal; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 18px; }
+    .card { background: var(--s1); border: 1px solid var(--bd); border-radius: 4px; padding: 18px 15px 16px; cursor: pointer; position: relative; transition: border-color .12s; user-select: none; }
+    .card:active { background: var(--s2); }
+    .card.done { border-color: var(--y); }
+    .card.done::after { content: '✓'; position: absolute; top: 11px; right: 13px; font: 11px/1 var(--mono); color: var(--y); }
+    .card-t { font: 700 13px/1 var(--head); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 5px; }
+    .card-s { font: 300 10px/1.4 var(--mono); color: var(--mu); letter-spacing: .04em; }
+    .wide { grid-column: 1/-1; border-color: transparent !important; padding: 12px 15px; }
+    .wide .card-t { font: 300 11px/1 var(--mono); color: var(--mu); letter-spacing: .06em; text-transform: none; }
+
+    .cnt { padding: 18px; }
+    .f { margin-bottom: 17px; }
+    .lbl { display: block; font: 400 9px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--mu); margin-bottom: 7px; }
+
+    input[type=text], input[type=number], input[type=time], textarea {
+      width: 100%; background: var(--s1); border: 1px solid var(--bd); border-radius: 3px;
+      color: var(--tx); font: 400 15px/1 var(--mono); padding: 12px 13px; outline: none;
+      -webkit-appearance: none; appearance: none; transition: border-color .12s;
+    }
+    input:focus, textarea:focus { border-color: var(--y); }
+    textarea { resize: none; line-height: 1.65; min-height: 90px; }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    /* Scale 1–2–3 */
+    .sc { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
+    .sc-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 16px/1 var(--mono); padding: 12px; cursor: pointer; transition: all .1s; }
+    .sc-b.on { background: var(--yd); border-color: var(--y); color: var(--y); }
+
+    /* Yes / No */
+    .tg { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .tg-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 13px/1 var(--mono); letter-spacing: .08em; padding: 12px; cursor: pointer; transition: all .1s; }
+    .tg-b.y { background: rgba(92,219,125,.1); border-color: var(--gr); color: var(--gr); }
+    .tg-b.n { background: rgba(224,96,96,.1);  border-color: var(--re); color: var(--re); }
+
+    /* Workout focus */
+    .wo4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 5px; }
+    .wo4-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 12px/1 var(--mono); letter-spacing: .05em; padding: 13px 4px; cursor: pointer; text-align: center; transition: all .1s; }
+    .wo4-b.on      { background: var(--yd); border-color: var(--y); color: var(--y); }
+    .wo4-b.rest-on { background: rgba(60,60,60,.25); border-color: #3a3a3a; color: #555; }
+
+    /* Block type buttons */
+    .blk-g { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
+    .blk-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 11px/1 var(--mono); letter-spacing: .06em; padding: 12px 4px; cursor: pointer; text-align: center; transition: all .1s; }
+    .blk-b.on { background: var(--yd); border-color: var(--y); color: var(--y); }
+
+    /* Caffeine */
+    .caf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 6px; }
+    .caf-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); padding: 14px 8px 12px; cursor: pointer; text-align: center; transition: all .1s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .caf-b.on { background: var(--yd); border-color: var(--y); }
+    .caf-n { font: 500 24px/1 var(--mono); color: var(--mu); transition: color .1s; }
+    .caf-b.on .caf-n { color: var(--y); }
+    .caf-l { font: 300 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mu); }
+    .caf-reset { width: 100%; background: transparent; border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 9px; cursor: pointer; transition: background .12s; }
+    .caf-reset:active { background: var(--s2); }
+
+    .sec { font: 700 10px/1 var(--head); letter-spacing: .15em; text-transform: uppercase; color: var(--y); margin: 24px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--bd); }
+    hr { border: none; border-top: 1px solid var(--bd); margin: 6px 0 18px; }
+
+    .btn { width: 100%; background: var(--y); border: none; border-radius: 3px; color: #0e0e0e; font: 700 14px/1 var(--head); letter-spacing: .1em; text-transform: uppercase; padding: 15px; cursor: pointer; margin-top: 6px; transition: opacity .15s; }
+    .btn:active { opacity: .82; }
+    .hidden { display: none !important; }
+
+    /* Entries */
+    .e-item { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; padding: 11px 13px; margin-bottom: 9px; }
+    .e-time { font: 400 9px/1 var(--mono); letter-spacing: .1em; color: var(--y); margin-bottom: 6px; }
+    .e-txt  { font: 300 13px/1.65 var(--mono); color: var(--tx); }
+    .e-none { color: var(--mu); font-size: 12px; text-align: center; padding: 40px 0; }
+
+    /* Output */
+    .out-tags { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+    .out-tag { font: 400 9px/1 var(--mono); letter-spacing: .08em; padding: 5px 9px; border-radius: 2px; }
+    .out-tag.ok { background: rgba(92,219,125,.1); color: var(--gr); border: 1px solid rgba(92,219,125,.3); }
+    .out-tag.no { background: rgba(60,60,60,.15); color: var(--mu); border: 1px solid var(--bd); }
+    .out-pre { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; padding: 13px; font: 300 11px/1.75 var(--mono); color: #777; white-space: pre; overflow-x: auto; max-height: 300px; overflow-y: auto; margin-bottom: 14px; }
+    .btn-share { width: 100%; background: var(--y); border: none; border-radius: 3px; color: #0e0e0e; font: 700 15px/1 var(--head); letter-spacing: .1em; text-transform: uppercase; padding: 16px; cursor: pointer; margin-bottom: 8px; transition: opacity .15s; }
+    .btn-share:active { opacity: .82; }
+    .btn-copy { width: 100%; background: var(--s2); border: 1px solid var(--bd); border-radius: 3px; color: var(--tx); font: 400 11px/1 var(--mono); letter-spacing: .08em; padding: 10px; cursor: pointer; transition: all .12s; }
+    .btn-copy:active { background: var(--yd); border-color: var(--y); }
+    .btn-copy.ok { color: var(--gr); border-color: var(--gr); }
+
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--y); color: #0e0e0e; font: 500 11px/1 var(--mono); letter-spacing: .08em; padding: 9px 18px; border-radius: 3px; transition: transform .18s ease; z-index: 99; pointer-events: none; white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="s-home" class="scr on">
+  <div class="h-meta" id="home-date">—</div>
+  <div class="h-logo">LOG<em>.</em></div>
+  <div class="grid">
+    <div class="card" id="card-m" onclick="go('morning')">
+      <div class="card-t">☀ Morning</div>
+      <div class="card-s">data + workout</div>
+    </div>
+    <div class="card" id="card-e" onclick="go('evening')">
+      <div class="card-t">◑ Evening</div>
+      <div class="card-s">data + blocks done</div>
+    </div>
+    <div class="card" id="card-en" onclick="go('entries')">
+      <div class="card-t">✎ Entry</div>
+      <div class="card-s" id="en-ct">no entries yet</div>
+    </div>
+    <div class="card" onclick="go('output')">
+      <div class="card-t">⊞ Output</div>
+      <div class="card-s">share .md file</div>
+    </div>
+    <div class="card wide" onclick="clearDay()">
+      <div class="card-t">↺ clear today's data</div>
+    </div>
+  </div>
+</div>
+
+<!-- MORNING -->
+<div id="s-morning" class="scr">
+  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Morning</span></div>
+  <div class="cnt">
+    <div class="f"><label class="lbl">Wakeup time</label><input type="time" id="m-wt"></div>
+    <div class="f"><label class="lbl">Sleep hours</label><input type="number" id="m-sl" placeholder="7.5" step="0.5"></div>
+    <div class="f"><label class="lbl">Energy (1–3)</label>
+      <div class="sc" id="sc-nrg-m">
+        <button class="sc-b" onclick="sc(this,'sc-nrg-m')">1</button>
+        <button class="sc-b" onclick="sc(this,'sc-nrg-m')">2</button>
+        <button class="sc-b" onclick="sc(this,'sc-nrg-m')">3</button>
+      </div>
+    </div>
+    <div class="f"><label class="lbl">Mood (1–3)</label>
+      <div class="sc" id="sc-mood-m">
+        <button class="sc-b" onclick="sc(this,'sc-mood-m')">1</button>
+        <button class="sc-b" onclick="sc(this,'sc-mood-m')">2</button>
+        <button class="sc-b" onclick="sc(this,'sc-mood-m')">3</button>
+      </div>
+    </div>
+    <div class="f"><label class="lbl">Cold shower (sec)</label><input type="number" id="m-cs" placeholder="60"></div>
+    <div class="f"><label class="lbl">Weight (kg)</label><input type="number" id="m-wkg" placeholder="75.0" step="0.1"></div>
+    <div class="f"><label class="lbl">km walked (morning)</label><input type="number" id="m-km" placeholder="2.0" step="0.1"></div>
+    <hr>
+    <div class="f">
+      <label class="lbl">Workout</label>
+      <div class="wo4" id="wo4">
+        <button class="wo4-b" onclick="setWo(this,'push')">push</button>
+        <button class="wo4-b" onclick="setWo(this,'pull')">pull</button>
+        <button class="wo4-b" onclick="setWo(this,'legs')">legs</button>
+        <button class="wo4-b" onclick="setWo(this,'rest')">rest</button>
+      </div>
+    </div>
+    <div id="wo-fields">
+      <div class="f"><label class="lbl">Total kg lifted</label><input type="number" id="m-tkg" placeholder="4500"></div>
+      <div class="f"><label class="lbl">Duration (min)</label><input type="number" id="m-tmin" placeholder="65"></div>
+    </div>
+    <button class="btn" onclick="saveMorning()">Save morning</button>
+  </div>
+</div>
+
+<!-- EVENING -->
+<div id="s-evening" class="scr">
+  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Evening</span></div>
+  <div class="cnt">
+    <div class="f"><label class="lbl">km walked (evening)</label><input type="number" id="e-kme" placeholder="3.5" step="0.1"></div>
+    <div class="f"><label class="lbl">Energy (1–3)</label>
+      <div class="sc" id="sc-nrg-e">
+        <button class="sc-b" onclick="sc(this,'sc-nrg-e')">1</button>
+        <button class="sc-b" onclick="sc(this,'sc-nrg-e')">2</button>
+        <button class="sc-b" onclick="sc(this,'sc-nrg-e')">3</button>
+      </div>
+    </div>
+    <div class="f"><label class="lbl">Mood (1–3)</label>
+      <div class="sc" id="sc-mood-e">
+        <button class="sc-b" onclick="sc(this,'sc-mood-e')">1</button>
+        <button class="sc-b" onclick="sc(this,'sc-mood-e')">2</button>
+        <button class="sc-b" onclick="sc(this,'sc-mood-e')">3</button>
+      </div>
+    </div>
+    <div class="f"><label class="lbl">Stress (1–3)</label>
+      <div class="sc" id="sc-stress">
+        <button class="sc-b" onclick="sc(this,'sc-stress')">1</button>
+        <button class="sc-b" onclick="sc(this,'sc-stress')">2</button>
+        <button class="sc-b" onclick="sc(this,'sc-stress')">3</button>
+      </div>
+    </div>
+    <div class="f"><label class="lbl">Meds taken</label>
+      <div class="tg" id="tg-meds">
+        <button class="tg-b" onclick="tg(this,'yes')">YES</button>
+        <button class="tg-b" onclick="tg(this,'no')">NO</button>
+      </div>
+    </div>
+    <div class="f">
+      <label class="lbl">Caffeine</label>
+      <div class="caf-row">
+        <button class="caf-b" id="caf-c-btn" onclick="incCaf('c')">
+          <span class="caf-n" id="caf-c-n">0</span>
+          <span class="caf-l">coffee</span>
+        </button>
+        <button class="caf-b" id="caf-ed-btn" onclick="incCaf('ed')">
+          <span class="caf-n" id="caf-ed-n">0</span>
+          <span class="caf-l">energy drink</span>
+        </button>
+      </div>
+      <button class="caf-reset" onclick="resetCaf()">reset caffeine</button>
+    </div>
+    <div class="f">
+      <label class="lbl">Blocks completed <span style="color:var(--mu);font-size:9px">(max 3)</span></label>
+      <div class="blk-g">
+        <button class="blk-b" onclick="toggleBlock(this,'chores')">chores</button>
+        <button class="blk-b" onclick="toggleBlock(this,'edu')">edu</button>
+        <button class="blk-b" onclick="toggleBlock(this,'mixing')">mixing</button>
+        <button class="blk-b" onclick="toggleBlock(this,'production')">production</button>
+        <button class="blk-b" onclick="toggleBlock(this,'content')">content</button>
+        <button class="blk-b" onclick="toggleBlock(this,'system')">system</button>
+      </div>
+    </div>
+    <div class="f"><label class="lbl">Mixing blocks (count)</label><input type="number" id="e-bmix" placeholder="0" min="0"></div>
+    <button class="btn" onclick="saveEvening()">Save evening</button>
+  </div>
+</div>
+
+<!-- ENTRIES -->
+<div id="s-entries" class="scr">
+  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Entries</span></div>
+  <div class="cnt">
+    <div class="f"><label class="lbl">New entry</label><textarea id="et" placeholder="Write here…"></textarea></div>
+    <button class="btn" onclick="addEntry()" style="margin-bottom:22px">Add entry</button>
+    <div id="e-list"></div>
+  </div>
+</div>
+
+<!-- OUTPUT -->
+<div id="s-output" class="scr">
+  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Output</span></div>
+  <div class="cnt">
+    <div class="out-tags" id="out-tags"></div>
+    <div class="out-pre" id="out-pre"></div>
+    <button class="btn-share" onclick="shareFile()">↑ share .md</button>
+    <button class="btn-copy" id="btn-copy" onclick="copyAll()">copy all</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Date ─────────────────────────────────────────────────────────────────────
+const TODAY = new Date().toISOString().split('T')[0];
+
+// ── Storage ───────────────────────────────────────────────────────────────────
+const SK = 'log_data';
+
+function fresh() {
+  return {
+    date: TODAY,
+    m:  { wt:'', sl:'', nrg:'', mood:'', cs:'', wkg:'', km:'', wo:'', tkg:'', tmin:'' },
+    e:  { kme:'', nrg:'', mood:'', stress:'', meds:'', caf_c:0, caf_ed:0, bmix:'', blocks:[] },
+    entries: []
+  };
+}
+
+let data;
+
+function initData() {
+  try {
+    const raw = localStorage.getItem(SK);
+    if (!raw) { data = fresh(); return; }
+    const d = JSON.parse(raw);
+    if (d.date !== TODAY) { data = fresh(); return; }
+    data = d;
+    // Patch missing fields from older saved versions
+    if (!Array.isArray(data.e.blocks)) data.e.blocks = [];
+    if (typeof data.e.caf_c  !== 'number') data.e.caf_c  = 0;
+    if (typeof data.e.caf_ed !== 'number') data.e.caf_ed = 0;
+  } catch { data = fresh(); }
+}
+
+function save() { localStorage.setItem(SK, JSON.stringify(data)); }
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function go(id) {
+  document.querySelectorAll('.scr').forEach(s => s.classList.remove('on'));
+  document.getElementById('s-' + id).classList.add('on');
+  window.scrollTo(0, 0);
+  ({ home: refreshHome, morning: popM, evening: popE, entries: renderEntries, output: renderOutput })[id]?.();
+}
+
+// ── Home ──────────────────────────────────────────────────────────────────────
+function refreshHome() {
+  document.getElementById('home-date').textContent =
+    new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('card-m').classList.toggle('done', !!data.m.wt);
+  document.getElementById('card-e').classList.toggle('done', !!data.e.kme);
+  const ec = data.entries.length;
+  document.getElementById('en-ct').textContent = ec ? `${ec} entr${ec===1?'y':'ies'}` : 'no entries yet';
+}
+
+// ── Scale 1–2–3 ───────────────────────────────────────────────────────────────
+function sc(btn, id) {
+  document.getElementById(id).querySelectorAll('.sc-b').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(id).dataset.v = btn.textContent.trim();
+}
+function scGet(id) { return document.getElementById(id)?.dataset.v || ''; }
+function scSet(id, val) {
+  if (!val) return;
+  const row = document.getElementById(id); if (!row) return;
+  row.dataset.v = String(val);
+  row.querySelectorAll('.sc-b').forEach(b => b.classList.toggle('on', b.textContent.trim() === String(val)));
+}
+
+// ── Yes / No ──────────────────────────────────────────────────────────────────
+function tg(btn, val) {
+  document.getElementById('tg-meds').querySelectorAll('.tg-b').forEach(b => b.classList.remove('y','n'));
+  btn.classList.add(val === 'yes' ? 'y' : 'n');
+  document.getElementById('tg-meds').dataset.v = val;
+}
+function tgGet() { return document.getElementById('tg-meds')?.dataset.v || ''; }
+function tgSet(val) {
+  if (!val) return;
+  const row = document.getElementById('tg-meds'); if (!row) return;
+  row.dataset.v = val;
+  row.querySelectorAll('.tg-b').forEach(b => {
+    b.classList.remove('y','n');
+    if (b.textContent.toLowerCase() === val) b.classList.add(val === 'yes' ? 'y' : 'n');
+  });
+}
+
+// ── Workout focus ─────────────────────────────────────────────────────────────
+function setWo(btn, val) {
+  document.getElementById('wo4').querySelectorAll('.wo4-b').forEach(b => b.classList.remove('on','rest-on'));
+  btn.classList.add(val === 'rest' ? 'rest-on' : 'on');
+  document.getElementById('wo4').dataset.v = val;
+  document.getElementById('wo-fields').classList.toggle('hidden', val === 'rest');
+}
+function woGet() { return document.getElementById('wo4')?.dataset.v || ''; }
+function woSet(val) {
+  if (!val) return;
+  const row = document.getElementById('wo4'); if (!row) return;
+  row.dataset.v = val;
+  row.querySelectorAll('.wo4-b').forEach(b => {
+    b.classList.remove('on','rest-on');
+    if (b.textContent.trim() === val) b.classList.add(val === 'rest' ? 'rest-on' : 'on');
+  });
+  document.getElementById('wo-fields').classList.toggle('hidden', val === 'rest');
+}
+
+// ── Caffeine ──────────────────────────────────────────────────────────────────
+function syncCafUI() {
+  const c = data.e.caf_c, ed = data.e.caf_ed;
+  document.getElementById('caf-c-n').textContent  = c;
+  document.getElementById('caf-ed-n').textContent = ed;
+  document.getElementById('caf-c-btn').classList.toggle('on', c > 0);
+  document.getElementById('caf-ed-btn').classList.toggle('on', ed > 0);
+}
+function incCaf(type) {
+  if (type === 'c') data.e.caf_c++;
+  else              data.e.caf_ed++;
+  syncCafUI();
+}
+function resetCaf() {
+  data.e.caf_c = 0; data.e.caf_ed = 0;
+  syncCafUI();
+}
+
+// ── Block type buttons ────────────────────────────────────────────────────────
+function toggleBlock(btn, name) {
+  const idx = data.e.blocks.indexOf(name);
+  if (idx >= 0) {
+    data.e.blocks.splice(idx, 1);
+    btn.classList.remove('on');
+  } else {
+    if (data.e.blocks.length >= 3) { toast('max 3 blocks'); return; }
+    data.e.blocks.push(name);
+    btn.classList.add('on');
+  }
+}
+function syncBlocks() {
+  document.querySelectorAll('.blk-b').forEach(b =>
+    b.classList.toggle('on', data.e.blocks.includes(b.textContent.trim())));
+}
+
+// ── Morning ───────────────────────────────────────────────────────────────────
+function popM() {
+  const m = data.m;
+  document.getElementById('m-wt').value  = m.wt  || '';
+  document.getElementById('m-sl').value  = m.sl  || '';
+  scSet('sc-nrg-m', m.nrg); scSet('sc-mood-m', m.mood);
+  document.getElementById('m-cs').value  = m.cs  || '';
+  document.getElementById('m-wkg').value = m.wkg || '';
+  document.getElementById('m-km').value  = m.km  || '';
+  woSet(m.wo);
+  document.getElementById('m-tkg').value  = m.tkg  || '';
+  document.getElementById('m-tmin').value = m.tmin || '';
+}
+
+function saveMorning() {
+  data.m = {
+    wt:   document.getElementById('m-wt').value,
+    sl:   document.getElementById('m-sl').value,
+    nrg:  scGet('sc-nrg-m'), mood: scGet('sc-mood-m'),
+    cs:   document.getElementById('m-cs').value,
+    wkg:  document.getElementById('m-wkg').value,
+    km:   document.getElementById('m-km').value,
+    wo:   woGet(),
+    tkg:  document.getElementById('m-tkg').value,
+    tmin: document.getElementById('m-tmin').value,
+  };
+  save(); toast('Morning saved'); go('home');
+}
+
+// ── Evening ───────────────────────────────────────────────────────────────────
+function popE() {
+  const e = data.e;
+  document.getElementById('e-kme').value = e.kme || '';
+  scSet('sc-nrg-e', e.nrg); scSet('sc-mood-e', e.mood); scSet('sc-stress', e.stress);
+  tgSet(e.meds);
+  syncCafUI();
+  syncBlocks();
+  document.getElementById('e-bmix').value = e.bmix || '';
+}
+
+function saveEvening() {
+  const e = data.e;
+  e.kme    = document.getElementById('e-kme').value;
+  e.nrg    = scGet('sc-nrg-e');
+  e.mood   = scGet('sc-mood-e');
+  e.stress = scGet('sc-stress');
+  e.meds   = tgGet();
+  e.bmix   = document.getElementById('e-bmix').value;
+  // caf_c, caf_ed, blocks are already live on data.e
+  save(); toast('Evening saved'); go('home');
+}
+
+// ── Entries ───────────────────────────────────────────────────────────────────
+function addEntry() {
+  const ta = document.getElementById('et'), txt = ta.value.trim(); if (!txt) return;
+  const now = new Date();
+  const t = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  data.entries.push({ time: t, text: txt });
+  save(); ta.value = ''; renderEntries(); toast('Entry saved');
+}
+
+function renderEntries() {
+  const list = document.getElementById('e-list');
+  if (!data.entries.length) { list.innerHTML = '<div class="e-none">no entries yet</div>'; return; }
+  list.innerHTML = [...data.entries].reverse().map(en =>
+    `<div class="e-item"><div class="e-time">${en.time}</div><div class="e-txt">${esc(en.text)}</div></div>`
+  ).join('');
+}
+
+// ── Build markdown ────────────────────────────────────────────────────────────
+function buildNote() {
+  const m = data.m, e = data.e;
+  const bl = e.blocks || [];
+  const b  = [bl[0]||'', bl[1]||'', bl[2]||''];
+  const ents = data.entries.map(en => ` > ${en.time} - ${en.text}`).join('\n');
+
+  // km total — calculated automatically
+  const kmM = parseFloat(m.km) || 0;
+  const kmE = parseFloat(e.kme) || 0;
+  const kmTot = (m.km !== '' || e.kme !== '') ? (kmM + kmE).toFixed(1) : '';
+
+  // Caffeine — "2c 1ed" or "-"
+  const cafParts = [];
+  if (e.caf_c  > 0) cafParts.push(`${e.caf_c}c`);
+  if (e.caf_ed > 0) cafParts.push(`${e.caf_ed}ed`);
+  const caf = cafParts.length ? cafParts.join(' ') : '-';
+
+  // Workout — omit kg/min rows if rest
+  const isRest = m.wo === 'rest';
+  const woRows = isRest
+    ? `| workout_focus | rest |`
+    : `| workout_focus | ${m.wo||''} |\n| total_kg      | ${m.tkg||''} |\n| time_min      | ${m.tmin||''} |`;
+
+  return (
+`*:LiCalendar: ${TODAY}*
+## planning
+
+#### blocks
+
+|    #     | block 1 | block 2 | block 3 |
+| :------: | :-----: | :-----: | :-----: |
+| activity | ${b[0]} | ${b[1]} | ${b[2]} |
+
+#### workout
+
+| item          |   r |
+| ------------- | --: |
+${woRows}
+
+## journal
+
+#### entries
+
+${ents}
+
+## data
+#### morning data
+
+| data          | ans |
+| ------------- | --: |
+| wakeup_time   | ${m.wt||''} |
+| sleep_hours   | ${m.sl||''} |
+| nrg_morning   | ${m.nrg||''} |
+| mood_morning  | ${m.mood||''} |
+| cold_shower_s | ${m.cs||''} |
+| weight_kg     | ${m.wkg||''} |
+| km_walked_m   | ${m.km||''} |
+
+#### evening data
+
+| data          | ans |
+| ------------- | --: |
+| km_walked_e   | ${e.kme||''} |
+| km_walked_tot | ${kmTot} |
+| nrg_evening   | ${e.nrg||''} |
+| mood_evening  | ${e.mood||''} |
+| stress        | ${e.stress||''} |
+| meds          | ${e.meds||''} |
+| caffeine      | ${caf} |
+| blocks_mix    | ${e.bmix||''} |`);
+}
+
+// ── Output ────────────────────────────────────────────────────────────────────
+function renderOutput() {
+  const note = buildNote();
+  document.getElementById('out-pre').textContent = note;
+
+  const tags = document.getElementById('out-tags'); tags.innerHTML = '';
+  const tag = (label, ok) => {
+    const t = document.createElement('span');
+    t.className = `out-tag ${ok ? 'ok' : 'no'}`;
+    t.textContent = label; tags.appendChild(t);
+  };
+  tag('morning', !!data.m.wt);
+  tag('evening', !!data.e.kme);
+  const ec = data.entries.length;
+  tag(`${ec} entr${ec === 1 ? 'y' : 'ies'}`, ec > 0);
+}
+
+function todayFilename() {
+  const [y, m, d] = TODAY.split('-');
+  return `${d}.${m}.${y.slice(2)}.md`;
+}
+
+async function shareFile() {
+  const note = buildNote(), filename = todayFilename();
+  try {
+    const file = new File([note], filename, { type: 'text/plain' });
+    if (navigator.canShare?.({ files: [file] })) { await navigator.share({ files: [file] }); return; }
+    if (navigator.share)                          { await navigator.share({ title: filename, text: note }); return; }
+  } catch(err) { if (err.name === 'AbortError') return; }
+  // Fallback: trigger download
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([note], { type: 'text/plain' }));
+  a.download = filename; a.click();
+}
+
+async function copyAll() {
+  const btn = document.getElementById('btn-copy'), note = buildNote();
+  try { await navigator.clipboard.writeText(note); }
+  catch {
+    const ta = Object.assign(document.createElement('textarea'), { value: note });
+    ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  btn.textContent = '✓ copied'; btn.classList.add('ok');
+  setTimeout(() => { btn.textContent = 'copy all'; btn.classList.remove('ok'); }, 2200);
+}
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+function clearDay() {
+  if (!confirm('Clear all data for today?')) return;
+  data = fresh(); save(); refreshHome(); toast('Cleared');
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1800);
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+initData();
+refreshHome();
+</script>
+</body>
+</html>
