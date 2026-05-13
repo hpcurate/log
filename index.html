@@ -9,14 +9,14 @@
   <meta name="theme-color" content="#0e0e0e">
   <title>LOG</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0e0e0e; --s1: #161616; --s2: #1e1e1e; --bd: #272727;
       --y: #e4d63a; --yd: rgba(228,214,58,.13);
       --tx: #dedede; --mu: #4a4a4a;
       --gr: #5cdb7d; --re: #e06060;
-      --mono: 'DM Mono','Courier New',monospace;
+      --mono: 'Space Mono','Courier New',monospace;
       --head: 'Syne',sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -29,7 +29,13 @@
     .hd-back { background: none; border: none; color: var(--y); font: 12px/1 var(--mono); cursor: pointer; letter-spacing: .06em; padding: 4px 0; }
     .hd-title { font: 800 15px/1 var(--head); letter-spacing: .1em; text-transform: uppercase; }
 
-    .h-meta { font: 700 10px/1 var(--head); letter-spacing: .16em; text-transform: uppercase; color: var(--mu); padding: 30px 18px 10px; }
+    .h-meta { font: 700 10px/1 var(--head); letter-spacing: .16em; text-transform: uppercase; color: var(--mu); padding: 30px 18px 10px; display: flex; align-items: center; gap: 8px; }
+    .h-date-txt { flex: 1; }
+    .h-arr { background: none; border: none; color: var(--mu); font: 400 13px/1 var(--mono); cursor: pointer; padding: 2px 5px; transition: color .12s; }
+    .h-arr:active { color: var(--y); }
+    .h-today { background: none; border: 1px solid var(--bd); border-radius: 2px; color: var(--mu); font: 400 8px/1 var(--mono); letter-spacing: .08em; cursor: pointer; padding: 3px 6px; transition: all .12s; }
+    .h-today:active { color: var(--y); border-color: var(--y); }
+    .h-today.hidden { display: none; }
     .h-logo { font: 800 54px/1 var(--head); letter-spacing: -.02em; padding: 0 18px 30px; }
     .h-logo em { color: var(--y); font-style: normal; }
 
@@ -122,7 +128,12 @@
 
 <!-- HOME -->
 <div id="s-home" class="scr on">
-  <div class="h-meta" id="home-date">—</div>
+  <div class="h-meta">
+    <button class="h-arr" onclick="shiftDate(-1)">←</button>
+    <span class="h-date-txt" id="home-date">—</span>
+    <button class="h-arr" onclick="shiftDate(1)">→</button>
+    <button class="h-today hidden" id="btn-today" onclick="resetDate()">today</button>
+  </div>
   <div class="h-logo">LOG<em>.</em></div>
   <div class="grid">
     <div class="card" id="card-m" onclick="go('morning')">
@@ -275,10 +286,25 @@
 
 <script>
 // ── Date ─────────────────────────────────────────────────────────────────────
-const TODAY = new Date().toISOString().split('T')[0];
+const REAL_TODAY = new Date().toISOString().split('T')[0];
+let TODAY = REAL_TODAY;
+
+function shiftDate(delta) {
+  const d = new Date(TODAY + 'T00:00:00');
+  d.setDate(d.getDate() + delta);
+  TODAY = d.toISOString().split('T')[0];
+  initData();
+  refreshHome();
+}
+
+function resetDate() {
+  TODAY = REAL_TODAY;
+  initData();
+  refreshHome();
+}
 
 // ── Storage ───────────────────────────────────────────────────────────────────
-const SK = 'log_data';
+const SK = () => 'log_' + TODAY;
 
 function fresh() {
   return {
@@ -293,19 +319,17 @@ let data;
 
 function initData() {
   try {
-    const raw = localStorage.getItem(SK);
+    const raw = localStorage.getItem(SK());
     if (!raw) { data = fresh(); return; }
     const d = JSON.parse(raw);
-    if (d.date !== TODAY) { data = fresh(); return; }
     data = d;
-    // Patch missing fields from older saved versions
     if (!Array.isArray(data.e.blocks)) data.e.blocks = [];
     if (typeof data.e.caf_c  !== 'number') data.e.caf_c  = 0;
     if (typeof data.e.caf_ed !== 'number') data.e.caf_ed = 0;
   } catch { data = fresh(); }
 }
 
-function save() { localStorage.setItem(SK, JSON.stringify(data)); }
+function save() { localStorage.setItem(SK(), JSON.stringify(data)); }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 function go(id) {
@@ -317,8 +341,11 @@ function go(id) {
 
 // ── Home ──────────────────────────────────────────────────────────────────────
 function refreshHome() {
+  const d = new Date(TODAY + 'T00:00:00');
   document.getElementById('home-date').textContent =
-    new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const notToday = TODAY !== REAL_TODAY;
+  document.getElementById('btn-today').classList.toggle('hidden', !notToday);
   document.getElementById('card-m').classList.toggle('done', !!data.m.wt);
   document.getElementById('card-e').classList.toggle('done', !!data.e.kme);
   const ec = data.entries.length;
