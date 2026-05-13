@@ -285,7 +285,7 @@
   <div class="hd"><button class="hd-back" onclick="goBack()">← back</button><span class="hd-title">Morning</span></div>
   <div class="cnt">
     <div class="f"><label class="lbl">Wakeup time</label><input type="time" id="m-wt" oninput="dirty=true"></div>
-    <div class="f"><label class="lbl">Sleep hours</label><input type="number" id="m-sl" placeholder="7.5" step="0.5" oninput="dirty=true"></div>
+    <div class="f"><label class="lbl">Sleep hours</label><input type="number" inputmode="decimal" id="m-sl" placeholder="7.5" step="0.5" oninput="dirty=true"></div>
     <div class="f"><label class="lbl">Energy (1–3)</label>
       <div class="sc" id="sc-nrg-m">
         <button class="sc-b" onclick="sc(this,'sc-nrg-m')">1</button>
@@ -306,13 +306,13 @@
         <button class="cs-tog-b" onclick="setColdShower(true)">yes</button>
         <button class="cs-tog-b" onclick="setColdShower(false)">no</button>
       </div>
-      <div class="hidden" id="cs-sec"><input type="number" id="m-cs" placeholder="seconds…" oninput="dirty=true" style="margin-top:6px"></div>
+      <div class="hidden" id="cs-sec"><input type="number" inputmode="numeric" id="m-cs" placeholder="seconds…" oninput="dirty=true" style="margin-top:6px"></div>
     </div>
     <div class="f">
       <label class="lbl">Weight (kg) <span class="lbl-hint" id="last-weight"></span></label>
-      <input type="number" id="m-wkg" placeholder="75.0" step="0.1" oninput="dirty=true">
+      <input type="number" inputmode="decimal" id="m-wkg" placeholder="75.0" step="0.1" oninput="dirty=true">
     </div>
-    <div class="f"><label class="lbl">km walked (morning)</label><input type="number" id="m-km" placeholder="2.0" step="0.1" oninput="dirty=true"></div>
+    <div class="f"><label class="lbl">km walked (morning)</label><input type="number" inputmode="decimal" id="m-km" placeholder="2.0" step="0.1" oninput="dirty=true"></div>
     <hr>
     <div class="f">
       <label class="lbl">Workout</label>
@@ -324,8 +324,8 @@
       </div>
     </div>
     <div id="wo-fields">
-      <div class="f"><label class="lbl">Total kg lifted</label><input type="number" id="m-tkg" placeholder="4500" oninput="dirty=true"></div>
-      <div class="f"><label class="lbl">Duration (min)</label><input type="number" id="m-tmin" placeholder="65" oninput="dirty=true"></div>
+      <div class="f"><label class="lbl">Total kg lifted</label><input type="number" inputmode="numeric" id="m-tkg" placeholder="4500" oninput="dirty=true"></div>
+      <div class="f"><label class="lbl">Duration (min)</label><input type="number" inputmode="numeric" id="m-tmin" placeholder="65" oninput="dirty=true"></div>
     </div>
     <button class="btn" onclick="saveMorning()">Save morning</button>
   </div>
@@ -335,7 +335,7 @@
 <div id="s-evening" class="scr">
   <div class="hd"><button class="hd-back" onclick="goBack()">← back</button><span class="hd-title">Evening</span></div>
   <div class="cnt">
-    <div class="f"><label class="lbl">km walked (evening)</label><input type="number" id="e-kme" placeholder="3.5" step="0.1" oninput="dirty=true"></div>
+    <div class="f"><label class="lbl">km walked (evening)</label><input type="number" inputmode="decimal" id="e-kme" placeholder="3.5" step="0.1" oninput="dirty=true"></div>
     <div class="f"><label class="lbl">Energy (1–3)</label>
       <div class="sc" id="sc-nrg-e">
         <button class="sc-b" onclick="sc(this,'sc-nrg-e')">1</button>
