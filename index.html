@@ -22,18 +22,20 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg); color: var(--tx); font-family: var(--mono); font-size: 14px; min-height: 100dvh; overscroll-behavior: none; }
 
+    /* ── Screens ── */
     .scr { display: none; min-height: 100dvh; padding-bottom: calc(52px + env(safe-area-inset-bottom)); }
     .scr.on { display: block; }
     #s-home { padding-top: env(safe-area-inset-top); }
-    .hd { padding-top: calc(14px + env(safe-area-inset-top)); }
 
-    .hd { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--bd); padding: 14px 18px; display: flex; align-items: center; gap: 14px; z-index: 10; }
-    .hd-back { background: none; border: none; color: var(--y); font: 12px/1 var(--mono); cursor: pointer; letter-spacing: .06em; padding: 4px 0; }
+    /* ── Header ── */
+    .hd { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--bd); padding: calc(14px + env(safe-area-inset-top)) 18px 14px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+    .hd-back { background: none; border: none; color: var(--y); font: 400 12px/1 var(--mono); cursor: pointer; letter-spacing: .06em; padding: 4px 0; }
     .hd-title { font: 800 15px/1 var(--head); letter-spacing: .1em; text-transform: uppercase; }
 
+    /* ── Home ── */
     .h-meta { font: 700 10px/1 var(--head); letter-spacing: .16em; text-transform: uppercase; color: var(--mu); padding: 30px 18px 10px; display: flex; align-items: center; gap: 8px; }
     .h-date-txt { flex: 1; }
-    .h-arr { background: none; border: none; color: var(--mu); font: 400 13px/1 var(--mono); cursor: pointer; padding: 2px 5px; transition: color .12s; }
+    .h-arr { background: none; border: none; color: var(--mu); font: 400 13px/1 var(--mono); cursor: pointer; padding: 2px 6px; transition: color .12s; }
     .h-arr:active { color: var(--y); }
     .h-today { background: none; border: 1px solid var(--bd); border-radius: 2px; color: var(--mu); font: 400 8px/1 var(--mono); letter-spacing: .08em; cursor: pointer; padding: 3px 6px; transition: all .12s; }
     .h-today:active { color: var(--y); border-color: var(--y); }
@@ -41,20 +43,24 @@
     .h-logo { font: 800 54px/1 var(--head); letter-spacing: -.02em; padding: 0 18px 30px; }
     .h-logo em { color: var(--y); font-style: normal; }
 
+    /* ── Grid cards ── */
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 18px; }
     .card { background: var(--s1); border: 1px solid var(--bd); border-radius: 4px; padding: 18px 15px 16px; cursor: pointer; position: relative; transition: border-color .12s; user-select: none; }
     .card:active { background: var(--s2); }
     .card.done { border-color: var(--y); }
     .card.done::after { content: '✓'; position: absolute; top: 11px; right: 13px; font: 11px/1 var(--mono); color: var(--y); }
     .card-t { font: 700 13px/1 var(--head); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 5px; }
-    .card-s { font: 300 10px/1.4 var(--mono); color: var(--mu); letter-spacing: .04em; }
+    .card-s { font: 400 10px/1.4 var(--mono); color: var(--mu); letter-spacing: .04em; }
     .wide { grid-column: 1/-1; border-color: transparent !important; padding: 12px 15px; }
-    .wide .card-t { font: 300 11px/1 var(--mono); color: var(--mu); letter-spacing: .06em; text-transform: none; }
+    .wide .card-t { font: 400 11px/1 var(--mono); color: var(--mu); letter-spacing: .06em; text-transform: none; }
 
+    /* ── Content ── */
     .cnt { padding: 18px; }
     .f { margin-bottom: 17px; }
     .lbl { display: block; font: 400 9px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--mu); margin-bottom: 7px; }
+    .lbl-hint { font: 400 9px/1 var(--mono); color: var(--mu); opacity: .6; }
 
+    /* ── Inputs ── */
     input[type=text], input[type=number], input[type=time], textarea {
       width: 100%; background: var(--s1); border: 1px solid var(--bd); border-radius: 3px;
       color: var(--tx); font: 400 15px/1 var(--mono); padding: 12px 13px; outline: none;
@@ -65,70 +71,103 @@
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-    /* Scale 1–2–3 */
+    /* ── Scale 1–2–3 ── */
     .sc { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
     .sc-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 16px/1 var(--mono); padding: 12px; cursor: pointer; transition: all .1s; }
     .sc-b.on { background: var(--yd); border-color: var(--y); color: var(--y); }
 
-    /* Yes / No */
+    /* ── Yes / No ── */
     .tg { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
     .tg-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 13px/1 var(--mono); letter-spacing: .08em; padding: 12px; cursor: pointer; transition: all .1s; }
     .tg-b.y { background: rgba(92,219,125,.1); border-color: var(--gr); color: var(--gr); }
-    .tg-b.n { background: rgba(224,96,96,.1);  border-color: var(--re); color: var(--re); }
+    .tg-b.n { background: rgba(224,96,96,.1); border-color: var(--re); color: var(--re); }
 
-    /* Workout focus */
+    /* ── Workout focus ── */
     .wo4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 5px; }
     .wo4-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 12px/1 var(--mono); letter-spacing: .05em; padding: 13px 4px; cursor: pointer; text-align: center; transition: all .1s; }
     .wo4-b.on      { background: var(--yd); border-color: var(--y); color: var(--y); }
     .wo4-b.rest-on { background: rgba(60,60,60,.25); border-color: #3a3a3a; color: #555; }
 
-    /* Block type buttons */
+    /* ── Block type buttons ── */
     .blk-g { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
     .blk-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 11px/1 var(--mono); letter-spacing: .06em; padding: 12px 4px; cursor: pointer; text-align: center; transition: all .1s; }
     .blk-b.on { background: var(--yd); border-color: var(--y); color: var(--y); }
 
-    /* Caffeine */
+    /* ── Counter buttons (caffeine + bmix) ── */
     .caf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 6px; }
     .caf-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); padding: 14px 8px 12px; cursor: pointer; text-align: center; transition: all .1s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
     .caf-b.on { background: var(--yd); border-color: var(--y); }
-    .caf-n { font: 500 24px/1 var(--mono); color: var(--mu); transition: color .1s; }
+    .caf-n { font: 700 24px/1 var(--mono); color: var(--mu); transition: color .1s; }
     .caf-b.on .caf-n { color: var(--y); }
-    .caf-l { font: 300 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mu); }
+    .caf-l { font: 400 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mu); }
+    .caf-b.on .caf-l { color: rgba(228,214,58,.6); }
     .caf-reset { width: 100%; background: transparent; border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 9px; cursor: pointer; transition: background .12s; }
     .caf-reset:active { background: var(--s2); }
 
+    /* ── bmix single counter ── */
+    .bmix-row { display: grid; grid-template-columns: 1fr auto; gap: 5px; align-items: stretch; }
+    .bmix-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); padding: 14px 8px 12px; cursor: pointer; text-align: center; transition: all .1s; display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; }
+    .bmix-b.on { background: var(--yd); border-color: var(--y); }
+    .bmix-b.on .caf-n { color: var(--y); }
+    .bmix-b.on .caf-l { color: rgba(228,214,58,.6); }
+    .bmix-reset { background: transparent; border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 9px/1 var(--mono); letter-spacing: .08em; padding: 9px 13px; cursor: pointer; white-space: nowrap; transition: background .12s; }
+    .bmix-reset:active { background: var(--s2); }
+
+    /* ── Cold shower ── */
+    .cs-row { display: grid; grid-template-columns: auto 1fr; gap: 5px; align-items: center; }
+    .cs-tog { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .cs-tog-b { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; color: var(--mu); font: 400 11px/1 var(--mono); letter-spacing: .08em; padding: 12px 8px; cursor: pointer; text-align: center; transition: all .1s; white-space: nowrap; }
+    .cs-tog-b.on { background: var(--yd); border-color: var(--y); color: var(--y); }
+    .cs-sec { margin-top: 6px; }
+
+    /* ── Misc ── */
     .sec { font: 700 10px/1 var(--head); letter-spacing: .15em; text-transform: uppercase; color: var(--y); margin: 24px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--bd); }
     hr { border: none; border-top: 1px solid var(--bd); margin: 6px 0 18px; }
-
     .btn { width: 100%; background: var(--y); border: none; border-radius: 3px; color: #0e0e0e; font: 700 14px/1 var(--head); letter-spacing: .1em; text-transform: uppercase; padding: 15px; cursor: pointer; margin-top: 6px; transition: opacity .15s; }
     .btn:active { opacity: .82; }
     .hidden { display: none !important; }
 
-    /* Entries */
-    .e-item { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; padding: 11px 13px; margin-bottom: 9px; }
+    /* ── Entries ── */
+    .e-item { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; padding: 11px 13px; margin-bottom: 9px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start; }
+    .e-body { min-width: 0; }
     .e-time { font: 400 9px/1 var(--mono); letter-spacing: .1em; color: var(--y); margin-bottom: 6px; }
-    .e-txt  { font: 300 13px/1.65 var(--mono); color: var(--tx); }
+    .e-txt  { font: 400 12px/1.65 var(--mono); color: var(--tx); word-break: break-word; }
+    .e-del  { background: none; border: none; color: var(--mu); font: 400 14px/1 var(--mono); cursor: pointer; padding: 2px 0 2px 4px; transition: color .12s; flex-shrink: 0; }
+    .e-del:active { color: var(--re); }
     .e-none { color: var(--mu); font-size: 12px; text-align: center; padding: 40px 0; }
 
-    /* Output */
+    /* ── Output ── */
     .out-tags { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
     .out-tag { font: 400 9px/1 var(--mono); letter-spacing: .08em; padding: 5px 9px; border-radius: 2px; }
     .out-tag.ok { background: rgba(92,219,125,.1); color: var(--gr); border: 1px solid rgba(92,219,125,.3); }
     .out-tag.no { background: rgba(60,60,60,.15); color: var(--mu); border: 1px solid var(--bd); }
-    .out-pre { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; padding: 13px; font: 300 11px/1.75 var(--mono); color: #777; white-space: pre; overflow-x: auto; max-height: 300px; overflow-y: auto; margin-bottom: 14px; }
+    .out-pre { background: var(--s1); border: 1px solid var(--bd); border-radius: 3px; padding: 13px; font: 400 11px/1.75 var(--mono); color: #777; white-space: pre; overflow-x: auto; max-height: 300px; overflow-y: auto; margin-bottom: 14px; }
     .btn-share { width: 100%; background: var(--y); border: none; border-radius: 3px; color: #0e0e0e; font: 700 15px/1 var(--head); letter-spacing: .1em; text-transform: uppercase; padding: 16px; cursor: pointer; margin-bottom: 8px; transition: opacity .15s; }
     .btn-share:active { opacity: .82; }
     .btn-copy { width: 100%; background: var(--s2); border: 1px solid var(--bd); border-radius: 3px; color: var(--tx); font: 400 11px/1 var(--mono); letter-spacing: .08em; padding: 10px; cursor: pointer; transition: all .12s; }
     .btn-copy:active { background: var(--yd); border-color: var(--y); }
     .btn-copy.ok { color: var(--gr); border-color: var(--gr); }
 
-    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--y); color: #0e0e0e; font: 500 11px/1 var(--mono); letter-spacing: .08em; padding: 9px 18px; border-radius: 3px; transition: transform .18s ease; z-index: 99; pointer-events: none; white-space: nowrap; }
+    /* ── History ── */
+    .hist-day { background: var(--s1); border: 1px solid var(--bd); border-radius: 4px; padding: 14px; margin-bottom: 9px; }
+    .hist-date { font: 700 11px/1 var(--head); letter-spacing: .1em; color: var(--y); margin-bottom: 10px; text-transform: uppercase; }
+    .hist-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 8px; }
+    .hist-cell { background: var(--s2); border-radius: 3px; padding: 8px 5px; text-align: center; }
+    .hist-val { font: 700 14px/1 var(--mono); color: var(--tx); }
+    .hist-key { font: 400 7px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mu); margin-top: 4px; }
+    .hist-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .hist-pill { font: 400 9px/1 var(--mono); background: var(--s2); border-radius: 2px; padding: 4px 7px; color: var(--mu); }
+    .hist-pill.y { color: var(--y); }
+    .hist-empty { color: var(--mu); font-size: 12px; text-align: center; padding: 40px 0; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%) translateY(60px); background: var(--y); color: #0e0e0e; font: 700 11px/1 var(--mono); letter-spacing: .08em; padding: 9px 18px; border-radius: 3px; transition: transform .18s ease; z-index: 99; pointer-events: none; white-space: nowrap; }
     .toast.show { transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
 
-<!-- HOME -->
+<!-- ═══ HOME ════════════════════════════════════════════════════════════════ -->
 <div id="s-home" class="scr on">
   <div class="h-meta">
     <button class="h-arr" onclick="shiftDate(-1)">←</button>
@@ -154,18 +193,22 @@
       <div class="card-t">⊞ Output</div>
       <div class="card-s">share .md file</div>
     </div>
+    <div class="card" onclick="go('history')" style="grid-column:1/-1; border-color:var(--bd)">
+      <div class="card-t">◷ History</div>
+      <div class="card-s">last 7 days</div>
+    </div>
     <div class="card wide" onclick="clearDay()">
-      <div class="card-t">↺ clear today's data</div>
+      <div class="card-t">↺ clear selected day's data</div>
     </div>
   </div>
 </div>
 
-<!-- MORNING -->
+<!-- ═══ MORNING ════════════════════════════════════════════════════════════ -->
 <div id="s-morning" class="scr">
-  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Morning</span></div>
+  <div class="hd"><button class="hd-back" onclick="goBack()">← back</button><span class="hd-title">Morning</span></div>
   <div class="cnt">
-    <div class="f"><label class="lbl">Wakeup time</label><input type="time" id="m-wt"></div>
-    <div class="f"><label class="lbl">Sleep hours</label><input type="number" id="m-sl" placeholder="7.5" step="0.5"></div>
+    <div class="f"><label class="lbl">Wakeup time</label><input type="time" id="m-wt" oninput="dirty=true"></div>
+    <div class="f"><label class="lbl">Sleep hours</label><input type="number" id="m-sl" placeholder="7.5" step="0.5" oninput="dirty=true"></div>
     <div class="f"><label class="lbl">Energy (1–3)</label>
       <div class="sc" id="sc-nrg-m">
         <button class="sc-b" onclick="sc(this,'sc-nrg-m')">1</button>
@@ -180,9 +223,21 @@
         <button class="sc-b" onclick="sc(this,'sc-mood-m')">3</button>
       </div>
     </div>
-    <div class="f"><label class="lbl">Cold shower (sec)</label><input type="number" id="m-cs" placeholder="60"></div>
-    <div class="f"><label class="lbl">Weight (kg)</label><input type="number" id="m-wkg" placeholder="75.0" step="0.1"></div>
-    <div class="f"><label class="lbl">km walked (morning)</label><input type="number" id="m-km" placeholder="2.0" step="0.1"></div>
+    <div class="f">
+      <label class="lbl">Cold shower</label>
+      <div class="cs-tog" id="cs-tog">
+        <button class="cs-tog-b" onclick="setColdShower(true)">yes</button>
+        <button class="cs-tog-b" onclick="setColdShower(false)">no</button>
+      </div>
+      <div class="cs-sec hidden" id="cs-sec">
+        <input type="number" id="m-cs" placeholder="seconds…" oninput="dirty=true" style="margin-top:6px">
+      </div>
+    </div>
+    <div class="f">
+      <label class="lbl">Weight (kg) <span class="lbl-hint" id="last-weight"></span></label>
+      <input type="number" id="m-wkg" placeholder="75.0" step="0.1" oninput="dirty=true">
+    </div>
+    <div class="f"><label class="lbl">km walked (morning)</label><input type="number" id="m-km" placeholder="2.0" step="0.1" oninput="dirty=true"></div>
     <hr>
     <div class="f">
       <label class="lbl">Workout</label>
@@ -194,18 +249,18 @@
       </div>
     </div>
     <div id="wo-fields">
-      <div class="f"><label class="lbl">Total kg lifted</label><input type="number" id="m-tkg" placeholder="4500"></div>
-      <div class="f"><label class="lbl">Duration (min)</label><input type="number" id="m-tmin" placeholder="65"></div>
+      <div class="f"><label class="lbl">Total kg lifted</label><input type="number" id="m-tkg" placeholder="4500" oninput="dirty=true"></div>
+      <div class="f"><label class="lbl">Duration (min)</label><input type="number" id="m-tmin" placeholder="65" oninput="dirty=true"></div>
     </div>
     <button class="btn" onclick="saveMorning()">Save morning</button>
   </div>
 </div>
 
-<!-- EVENING -->
+<!-- ═══ EVENING ════════════════════════════════════════════════════════════ -->
 <div id="s-evening" class="scr">
-  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Evening</span></div>
+  <div class="hd"><button class="hd-back" onclick="goBack()">← back</button><span class="hd-title">Evening</span></div>
   <div class="cnt">
-    <div class="f"><label class="lbl">km walked (evening)</label><input type="number" id="e-kme" placeholder="3.5" step="0.1"></div>
+    <div class="f"><label class="lbl">km walked (evening)</label><input type="number" id="e-kme" placeholder="3.5" step="0.1" oninput="dirty=true"></div>
     <div class="f"><label class="lbl">Energy (1–3)</label>
       <div class="sc" id="sc-nrg-e">
         <button class="sc-b" onclick="sc(this,'sc-nrg-e')">1</button>
@@ -248,7 +303,7 @@
       <button class="caf-reset" onclick="resetCaf()">reset caffeine</button>
     </div>
     <div class="f">
-      <label class="lbl">Blocks completed <span style="color:var(--mu);font-size:9px">(max 3)</span></label>
+      <label class="lbl">Blocks completed <span class="lbl-hint">(max 3)</span></label>
       <div class="blk-g">
         <button class="blk-b" onclick="toggleBlock(this,'chores')">chores</button>
         <button class="blk-b" onclick="toggleBlock(this,'edu')">edu</button>
@@ -258,22 +313,31 @@
         <button class="blk-b" onclick="toggleBlock(this,'system')">system</button>
       </div>
     </div>
-    <div class="f"><label class="lbl">Mixing blocks (count)</label><input type="number" id="e-bmix" placeholder="0" min="0"></div>
+    <div class="f">
+      <label class="lbl">Mixing blocks</label>
+      <div class="bmix-row">
+        <button class="bmix-b" id="bmix-btn" onclick="incBmix()">
+          <span class="caf-n" id="bmix-n">0</span>
+          <span class="caf-l">blocks</span>
+        </button>
+        <button class="bmix-reset" onclick="resetBmix()">reset</button>
+      </div>
+    </div>
     <button class="btn" onclick="saveEvening()">Save evening</button>
   </div>
 </div>
 
-<!-- ENTRIES -->
+<!-- ═══ ENTRIES ════════════════════════════════════════════════════════════ -->
 <div id="s-entries" class="scr">
-  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Entries</span></div>
+  <div class="hd"><button class="hd-back" onclick="goBack()">← back</button><span class="hd-title">Entries</span></div>
   <div class="cnt">
-    <div class="f"><label class="lbl">New entry</label><textarea id="et" placeholder="Write here…"></textarea></div>
+    <div class="f"><label class="lbl">New entry</label><textarea id="et" placeholder="Write here…" oninput="dirty=true"></textarea></div>
     <button class="btn" onclick="addEntry()" style="margin-bottom:22px">Add entry</button>
     <div id="e-list"></div>
   </div>
 </div>
 
-<!-- OUTPUT -->
+<!-- ═══ OUTPUT ══════════════════════════════════════════════════════════════ -->
 <div id="s-output" class="scr">
   <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Output</span></div>
   <div class="cnt">
@@ -284,26 +348,27 @@
   </div>
 </div>
 
+<!-- ═══ HISTORY ════════════════════════════════════════════════════════════ -->
+<div id="s-history" class="scr">
+  <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">History</span></div>
+  <div class="cnt" id="hist-list"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Date ─────────────────────────────────────────────────────────────────────
+// ── Dates ─────────────────────────────────────────────────────────────────────
 const REAL_TODAY = new Date().toISOString().split('T')[0];
 let TODAY = REAL_TODAY;
 
-function shiftDate(delta) {
-  const d = new Date(TODAY + 'T00:00:00');
-  d.setDate(d.getDate() + delta);
-  TODAY = d.toISOString().split('T')[0];
-  initData();
-  refreshHome();
+function dateOffset(base, n) {
+  const d = new Date(base + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().split('T')[0];
 }
 
-function resetDate() {
-  TODAY = REAL_TODAY;
-  initData();
-  refreshHome();
-}
+function shiftDate(delta) { TODAY = dateOffset(TODAY, delta); initData(); refreshHome(); }
+function resetDate()       { TODAY = REAL_TODAY; initData(); refreshHome(); }
 
 // ── Storage ───────────────────────────────────────────────────────────────────
 const SK = () => 'log_' + TODAY;
@@ -311,8 +376,8 @@ const SK = () => 'log_' + TODAY;
 function fresh() {
   return {
     date: TODAY,
-    m:  { wt:'', sl:'', nrg:'', mood:'', cs:'', wkg:'', km:'', wo:'', tkg:'', tmin:'' },
-    e:  { kme:'', nrg:'', mood:'', stress:'', meds:'', caf_c:0, caf_ed:0, bmix:'', blocks:[] },
+    m: { wt:'', sl:'', nrg:'', mood:'', cs_on:null, cs:'', wkg:'', km:'', wo:'', tkg:'', tmin:'' },
+    e: { kme:'', nrg:'', mood:'', stress:'', meds:'', caf_c:0, caf_ed:0, bmix:0, blocks:[] },
     entries: []
   };
 }
@@ -320,25 +385,43 @@ function fresh() {
 let data;
 
 function initData() {
+  purgeOld();
   try {
     const raw = localStorage.getItem(SK());
     if (!raw) { data = fresh(); return; }
     const d = JSON.parse(raw);
     data = d;
-    if (!Array.isArray(data.e.blocks)) data.e.blocks = [];
-    if (typeof data.e.caf_c  !== 'number') data.e.caf_c  = 0;
-    if (typeof data.e.caf_ed !== 'number') data.e.caf_ed = 0;
+    if (!Array.isArray(data.e.blocks))          data.e.blocks = [];
+    if (typeof data.e.caf_c  !== 'number')      data.e.caf_c  = 0;
+    if (typeof data.e.caf_ed !== 'number')       data.e.caf_ed = 0;
+    if (typeof data.e.bmix   !== 'number')       data.e.bmix   = 0;
+    if (data.m.cs_on === undefined)              data.m.cs_on  = null;
   } catch { data = fresh(); }
 }
 
 function save() { localStorage.setItem(SK(), JSON.stringify(data)); }
 
+function purgeOld() {
+  const cutoff = dateOffset(REAL_TODAY, -7);
+  Object.keys(localStorage)
+    .filter(k => k.startsWith('log_'))
+    .forEach(k => { const d = k.replace('log_',''); if (d < cutoff) localStorage.removeItem(k); });
+}
+
 // ── Navigation ────────────────────────────────────────────────────────────────
+let dirty = false;
+
 function go(id) {
+  dirty = false;
   document.querySelectorAll('.scr').forEach(s => s.classList.remove('on'));
   document.getElementById('s-' + id).classList.add('on');
   window.scrollTo(0, 0);
-  ({ home: refreshHome, morning: popM, evening: popE, entries: renderEntries, output: renderOutput })[id]?.();
+  ({ home: refreshHome, morning: popM, evening: popE, entries: renderEntries, output: renderOutput, history: renderHistory })[id]?.();
+}
+
+function goBack() {
+  if (dirty && !confirm('Go back without saving?')) return;
+  go('home');
 }
 
 // ── Home ──────────────────────────────────────────────────────────────────────
@@ -346,8 +429,7 @@ function refreshHome() {
   const d = new Date(TODAY + 'T00:00:00');
   document.getElementById('home-date').textContent =
     d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
-  const notToday = TODAY !== REAL_TODAY;
-  document.getElementById('btn-today').classList.toggle('hidden', !notToday);
+  document.getElementById('btn-today').classList.toggle('hidden', TODAY === REAL_TODAY);
   document.getElementById('card-m').classList.toggle('done', !!data.m.wt);
   document.getElementById('card-e').classList.toggle('done', !!data.e.kme);
   const ec = data.entries.length;
@@ -356,6 +438,7 @@ function refreshHome() {
 
 // ── Scale 1–2–3 ───────────────────────────────────────────────────────────────
 function sc(btn, id) {
+  dirty = true;
   document.getElementById(id).querySelectorAll('.sc-b').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById(id).dataset.v = btn.textContent.trim();
@@ -370,6 +453,7 @@ function scSet(id, val) {
 
 // ── Yes / No ──────────────────────────────────────────────────────────────────
 function tg(btn, val) {
+  dirty = true;
   document.getElementById('tg-meds').querySelectorAll('.tg-b').forEach(b => b.classList.remove('y','n'));
   btn.classList.add(val === 'yes' ? 'y' : 'n');
   document.getElementById('tg-meds').dataset.v = val;
@@ -385,8 +469,30 @@ function tgSet(val) {
   });
 }
 
+// ── Cold shower ───────────────────────────────────────────────────────────────
+function setColdShower(on) {
+  dirty = true;
+  data.m.cs_on = on;
+  document.getElementById('cs-tog').querySelectorAll('.cs-tog-b').forEach((b,i) =>
+    b.classList.toggle('on', on ? i===0 : i===1));
+  document.getElementById('cs-sec').classList.toggle('hidden', !on);
+  if (!on) document.getElementById('m-cs').value = '';
+}
+function syncColdShower(on, sec) {
+  if (on === null) { // unset
+    document.getElementById('cs-tog').querySelectorAll('.cs-tog-b').forEach(b => b.classList.remove('on'));
+    document.getElementById('cs-sec').classList.add('hidden');
+    return;
+  }
+  document.getElementById('cs-tog').querySelectorAll('.cs-tog-b').forEach((b,i) =>
+    b.classList.toggle('on', on ? i===0 : i===1));
+  document.getElementById('cs-sec').classList.toggle('hidden', !on);
+  document.getElementById('m-cs').value = sec || '';
+}
+
 // ── Workout focus ─────────────────────────────────────────────────────────────
 function setWo(btn, val) {
+  dirty = true;
   document.getElementById('wo4').querySelectorAll('.wo4-b').forEach(b => b.classList.remove('on','rest-on'));
   btn.classList.add(val === 'rest' ? 'rest-on' : 'on');
   document.getElementById('wo4').dataset.v = val;
@@ -413,30 +519,46 @@ function syncCafUI() {
   document.getElementById('caf-ed-btn').classList.toggle('on', ed > 0);
 }
 function incCaf(type) {
-  if (type === 'c') data.e.caf_c++;
-  else              data.e.caf_ed++;
+  dirty = true;
+  if (type === 'c') data.e.caf_c++; else data.e.caf_ed++;
   syncCafUI();
 }
-function resetCaf() {
-  data.e.caf_c = 0; data.e.caf_ed = 0;
-  syncCafUI();
+function resetCaf() { data.e.caf_c = 0; data.e.caf_ed = 0; syncCafUI(); }
+
+// ── Mixing blocks counter ────────────────────────────────────────────────────
+function syncBmixUI() {
+  const n = data.e.bmix;
+  document.getElementById('bmix-n').textContent = n;
+  document.getElementById('bmix-btn').classList.toggle('on', n > 0);
 }
+function incBmix() { dirty = true; data.e.bmix++; syncBmixUI(); }
+function resetBmix() { data.e.bmix = 0; syncBmixUI(); }
 
 // ── Block type buttons ────────────────────────────────────────────────────────
 function toggleBlock(btn, name) {
+  dirty = true;
   const idx = data.e.blocks.indexOf(name);
-  if (idx >= 0) {
-    data.e.blocks.splice(idx, 1);
-    btn.classList.remove('on');
-  } else {
+  if (idx >= 0) { data.e.blocks.splice(idx, 1); btn.classList.remove('on'); }
+  else {
     if (data.e.blocks.length >= 3) { toast('max 3 blocks'); return; }
-    data.e.blocks.push(name);
-    btn.classList.add('on');
+    data.e.blocks.push(name); btn.classList.add('on');
   }
 }
 function syncBlocks() {
   document.querySelectorAll('.blk-b').forEach(b =>
     b.classList.toggle('on', data.e.blocks.includes(b.textContent.trim())));
+}
+
+// ── Last weight reference ─────────────────────────────────────────────────────
+function lastWeight() {
+  for (let i = 1; i <= 7; i++) {
+    const key = 'log_' + dateOffset(TODAY, -i);
+    try {
+      const d = JSON.parse(localStorage.getItem(key));
+      if (d?.m?.wkg) return d.m.wkg;
+    } catch {}
+  }
+  return null;
 }
 
 // ── Morning ───────────────────────────────────────────────────────────────────
@@ -445,20 +567,24 @@ function popM() {
   document.getElementById('m-wt').value  = m.wt  || '';
   document.getElementById('m-sl').value  = m.sl  || '';
   scSet('sc-nrg-m', m.nrg); scSet('sc-mood-m', m.mood);
-  document.getElementById('m-cs').value  = m.cs  || '';
+  syncColdShower(m.cs_on, m.cs);
   document.getElementById('m-wkg').value = m.wkg || '';
   document.getElementById('m-km').value  = m.km  || '';
   woSet(m.wo);
   document.getElementById('m-tkg').value  = m.tkg  || '';
   document.getElementById('m-tmin').value = m.tmin || '';
+  const lw = lastWeight();
+  document.getElementById('last-weight').textContent = lw ? `last: ${lw} kg` : '';
 }
 
 function saveMorning() {
+  const cs_on = data.m.cs_on;
   data.m = {
     wt:   document.getElementById('m-wt').value,
     sl:   document.getElementById('m-sl').value,
     nrg:  scGet('sc-nrg-m'), mood: scGet('sc-mood-m'),
-    cs:   document.getElementById('m-cs').value,
+    cs_on,
+    cs:   cs_on ? document.getElementById('m-cs').value : '',
     wkg:  document.getElementById('m-wkg').value,
     km:   document.getElementById('m-km').value,
     wo:   woGet(),
@@ -474,20 +600,16 @@ function popE() {
   document.getElementById('e-kme').value = e.kme || '';
   scSet('sc-nrg-e', e.nrg); scSet('sc-mood-e', e.mood); scSet('sc-stress', e.stress);
   tgSet(e.meds);
-  syncCafUI();
-  syncBlocks();
-  document.getElementById('e-bmix').value = e.bmix || '';
+  syncCafUI(); syncBmixUI(); syncBlocks();
 }
 
 function saveEvening() {
-  const e = data.e;
-  e.kme    = document.getElementById('e-kme').value;
-  e.nrg    = scGet('sc-nrg-e');
-  e.mood   = scGet('sc-mood-e');
-  e.stress = scGet('sc-stress');
-  e.meds   = tgGet();
-  e.bmix   = document.getElementById('e-bmix').value;
-  // caf_c, caf_ed, blocks are already live on data.e
+  data.e.kme    = document.getElementById('e-kme').value;
+  data.e.nrg    = scGet('sc-nrg-e');
+  data.e.mood   = scGet('sc-mood-e');
+  data.e.stress = scGet('sc-stress');
+  data.e.meds   = tgGet();
+  // caf_c, caf_ed, bmix, blocks are already live on data.e
   save(); toast('Evening saved'); go('home');
 }
 
@@ -497,15 +619,34 @@ function addEntry() {
   const now = new Date();
   const t = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   data.entries.push({ time: t, text: txt });
-  save(); ta.value = ''; renderEntries(); toast('Entry saved');
+  save(); ta.value = ''; dirty = false; renderEntries(); toast('Entry saved');
+}
+
+function deleteEntry(idx) {
+  data.entries.splice(idx, 1);
+  save(); renderEntries(); toast('Entry deleted');
 }
 
 function renderEntries() {
   const list = document.getElementById('e-list');
   if (!data.entries.length) { list.innerHTML = '<div class="e-none">no entries yet</div>'; return; }
-  list.innerHTML = [...data.entries].reverse().map(en =>
-    `<div class="e-item"><div class="e-time">${en.time}</div><div class="e-txt">${esc(en.text)}</div></div>`
-  ).join('');
+  list.innerHTML = [...data.entries].map((en, i) => `
+    <div class="e-item">
+      <div class="e-body">
+        <div class="e-time">${en.time}</div>
+        <div class="e-txt">${esc(en.text)}</div>
+      </div>
+      <button class="e-del" onclick="deleteEntry(${i})">✕</button>
+    </div>`).reverse().join('');
+  // Reverse display but keep original indices — re-render with correct indices
+  list.innerHTML = data.entries.map((en, i) => `
+    <div class="e-item">
+      <div class="e-body">
+        <div class="e-time">${en.time}</div>
+        <div class="e-txt">${esc(en.text)}</div>
+      </div>
+      <button class="e-del" onclick="deleteEntry(${i})">✕</button>
+    </div>`).reverse().join('');
 }
 
 // ── Build markdown ────────────────────────────────────────────────────────────
@@ -515,18 +656,17 @@ function buildNote() {
   const b  = [bl[0]||'', bl[1]||'', bl[2]||''];
   const ents = data.entries.map(en => ` > ${en.time} - ${en.text}`).join('\n\n');
 
-  // km total — calculated automatically
   const kmM = parseFloat(m.km) || 0;
   const kmE = parseFloat(e.kme) || 0;
   const kmTot = (m.km !== '' || e.kme !== '') ? (kmM + kmE).toFixed(1) : '';
 
-  // Caffeine — "2c 1ed" or "-"
   const cafParts = [];
   if (e.caf_c  > 0) cafParts.push(`${e.caf_c}c`);
   if (e.caf_ed > 0) cafParts.push(`${e.caf_ed}ed`);
   const caf = cafParts.length ? cafParts.join(' ') : '-';
 
-  // Workout — omit kg/min rows if rest
+  const csVal = m.cs_on === true ? (m.cs || '0') : m.cs_on === false ? '0' : '';
+
   const isRest = m.wo === 'rest';
   const woRows = isRest
     ? `| workout_focus | rest |`
@@ -563,7 +703,7 @@ ${ents}
 | sleep_hours   | ${m.sl||''} |
 | nrg_morning   | ${m.nrg||''} |
 | mood_morning  | ${m.mood||''} |
-| cold_shower_s | ${m.cs||''} |
+| cold_shower_s | ${csVal} |
 | weight_kg     | ${m.wkg||''} |
 | km_walked_m   | ${m.km||''} |
 
@@ -578,14 +718,13 @@ ${ents}
 | stress        | ${e.stress||''} |
 | meds          | ${e.meds||''} |
 | caffeine      | ${caf} |
-| blocks_mix    | ${e.bmix||''} |`);
+| blocks_mix    | ${e.bmix||0} |`);
 }
 
 // ── Output ────────────────────────────────────────────────────────────────────
 function renderOutput() {
   const note = buildNote();
   document.getElementById('out-pre').textContent = note;
-
   const tags = document.getElementById('out-tags'); tags.innerHTML = '';
   const tag = (label, ok) => {
     const t = document.createElement('span');
@@ -608,9 +747,8 @@ async function shareFile() {
   try {
     const file = new File([note], filename, { type: 'text/plain' });
     if (navigator.canShare?.({ files: [file] })) { await navigator.share({ files: [file] }); return; }
-    if (navigator.share)                          { await navigator.share({ title: filename, text: note }); return; }
+    if (navigator.share) { await navigator.share({ title: filename, text: note }); return; }
   } catch(err) { if (err.name === 'AbortError') return; }
-  // Fallback: trigger download
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([note], { type: 'text/plain' }));
   a.download = filename; a.click();
@@ -628,9 +766,58 @@ async function copyAll() {
   setTimeout(() => { btn.textContent = 'copy all'; btn.classList.remove('ok'); }, 2200);
 }
 
+// ── History ───────────────────────────────────────────────────────────────────
+function renderHistory() {
+  const container = document.getElementById('hist-list');
+  const days = [];
+  for (let i = 1; i <= 7; i++) days.push(dateOffset(REAL_TODAY, -i));
+
+  const rows = days.map(date => {
+    const key = 'log_' + date;
+    let d;
+    try { d = JSON.parse(localStorage.getItem(key)); } catch {}
+    if (!d) return `<div class="hist-day"><div class="hist-date">${fmtDate(date)}</div><div style="color:var(--mu);font-size:11px">no data</div></div>`;
+
+    const m = d.m || {}, e = d.e || {};
+    const cafParts = [];
+    if ((e.caf_c||0)  > 0) cafParts.push(`${e.caf_c}c`);
+    if ((e.caf_ed||0) > 0) cafParts.push(`${e.caf_ed}ed`);
+    const caf = cafParts.join(' ') || '-';
+    const blocks = (e.blocks||[]).join(' · ') || '—';
+    const meds = e.meds || '—';
+    const wo = m.wo || '—';
+    const kmM = parseFloat(m.km)||0, kmE = parseFloat(e.kme)||0;
+    const kmTot = (m.km||e.kme) ? (kmM+kmE).toFixed(1)+'km' : '—';
+
+    return `<div class="hist-day">
+      <div class="hist-date">${fmtDate(date)}</div>
+      <div class="hist-grid">
+        <div class="hist-cell"><div class="hist-val">${m.nrg||'—'}</div><div class="hist-key">nrg↑</div></div>
+        <div class="hist-cell"><div class="hist-val">${m.mood||'—'}</div><div class="hist-key">mood↑</div></div>
+        <div class="hist-cell"><div class="hist-val">${e.stress||'—'}</div><div class="hist-key">stress↓</div></div>
+        <div class="hist-cell"><div class="hist-val">${m.wkg||'—'}</div><div class="hist-key">kg</div></div>
+      </div>
+      <div class="hist-row">
+        <span class="hist-pill ${e.meds==='yes'?'y':''}">meds: ${meds}</span>
+        <span class="hist-pill">${wo}</span>
+        <span class="hist-pill">${kmTot}</span>
+        <span class="hist-pill">${caf}</span>
+        <span class="hist-pill y">${blocks}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = rows || '<div class="hist-empty">no history yet</div>';
+}
+
+function fmtDate(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' }).toUpperCase();
+}
+
 // ── Utils ─────────────────────────────────────────────────────────────────────
 function clearDay() {
-  if (!confirm('Clear all data for today?')) return;
+  if (!confirm('Clear all data for selected day?')) return;
   data = fresh(); save(); refreshHome(); toast('Cleared');
 }
 
