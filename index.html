@@ -232,9 +232,46 @@
            font:700 11px/1 var(--mono);letter-spacing:.08em;padding:9px 18px;border-radius:3px;
            transition:transform .18s ease;z-index:99;pointer-events:none;white-space:nowrap}
     .toast.show{transform:translateX(-50%) translateY(0)}
+    /* ── Icons ── */
+    .ico{width:13px;height:13px;display:inline-block;vertical-align:middle;margin-right:7px;margin-top:-2px;flex-shrink:0}
   </style>
 </head>
 <body>
+<!-- SVG icon definitions — stroke icons, currentColor, always monotone -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
+    <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+    <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
+    <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+  </symbol>
+  <symbol id="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </symbol>
+  <symbol id="ico-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+  </symbol>
+  <symbol id="ico-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+  </symbol>
+  <symbol id="ico-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </symbol>
+  <symbol id="ico-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+  </symbol>
+  <symbol id="ico-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+    <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+    <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+    <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+  </symbol>
+  <symbol id="ico-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+    <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+  </symbol>
+</svg>
 
 <!-- ═══ HOME ════════════════════════════════════════════════════════════════ -->
 <div id="s-home" class="scr on">
@@ -248,34 +285,34 @@
   <div class="h-streak" id="h-streak"></div>
   <div class="grid">
     <div class="card" id="card-m" onclick="go('morning')">
-      <div class="card-t">☀ Morning</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-sun"/></svg>Morning</div>
       <div class="card-s">data + workout</div>
     </div>
     <div class="card" id="card-e" onclick="go('evening')">
-      <div class="card-t">◑ Evening</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-moon"/></svg>Evening</div>
       <div class="card-s">data + blocks done</div>
     </div>
     <div class="card" id="card-en" onclick="go('entries')">
-      <div class="card-t">✎ Entry</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-edit"/></svg>Entry</div>
       <div class="card-s" id="en-ct">no entries yet</div>
     </div>
     <div class="card" onclick="go('output')">
-      <div class="card-t">⊞ Output</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-upload"/></svg>Output</div>
       <div class="card-s">share .md file</div>
     </div>
     <div class="card" onclick="go('history')">
-      <div class="card-t">◷ History</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-clock"/></svg>History</div>
       <div class="card-s">trends + past days</div>
     </div>
     <div class="card" onclick="go('reports')">
-      <div class="card-t">⊗ Reports</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-chart"/></svg>Reports</div>
       <div class="card-s">weekly · monthly</div>
     </div>
     <div class="card full muted" onclick="go('datascreen')">
-      <div class="card-t">⚙ data management</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-sliders"/></svg>data management</div>
     </div>
     <div class="card full muted" onclick="clearDay()">
-      <div class="card-t">↺ clear selected day's data</div>
+      <div class="card-t"><svg class="ico"><use href="#ico-trash"/></svg>clear selected day's data</div>
     </div>
   </div>
 </div>
@@ -433,21 +470,43 @@
 <div id="s-reports" class="scr">
   <div class="hd"><button class="hd-back" onclick="go('home')">← back</button><span class="hd-title">Reports</span></div>
   <div class="cnt">
-    <button class="rep-btn" onclick="loadReport('weekly')">
-      <span>Weekly report</span>
-      <span id="rep-week-label">—</span>
-    </button>
-    <button class="rep-btn" onclick="loadReport('monthly')">
-      <span>Monthly report</span>
-      <span id="rep-month-label">—</span>
-    </button>
+
+    <!-- Step 1: paste or use phone data -->
+    <div id="rep-step-paste">
+      <div class="f">
+        <label class="lbl">Obsidian data <span class="lbl-hint">Advanced Merger → right-click daily folder → Merge folder → copy → paste here</span></label>
+        <textarea id="rep-paste" placeholder="Paste merged notes here…" style="min-height:130px;margin-top:8px"></textarea>
+      </div>
+      <button class="btn" onclick="parseNotes()">Parse notes</button>
+      <div class="sec">Or use phone data only</div>
+      <button class="rep-btn" onclick="loadReportLocal('weekly')">
+        <span>Weekly</span><span id="rep-week-label">—</span>
+      </button>
+      <button class="rep-btn" onclick="loadReportLocal('monthly')">
+        <span>Monthly</span><span id="rep-month-label">—</span>
+      </button>
+    </div>
+
+    <!-- Step 2: pick week or month -->
+    <div id="rep-step-pick" class="hidden">
+      <div id="rep-parsed-info" style="font:400 10px/1.6 var(--mono);color:var(--mu);margin-bottom:18px;padding:10px 12px;background:var(--s1);border:1px solid var(--bd);border-radius:3px"></div>
+      <div class="sec">Weekly</div>
+      <div id="rep-week-btns" style="display:flex;flex-direction:column;gap:6px;margin-bottom:4px"></div>
+      <div class="sec">Monthly</div>
+      <div id="rep-month-btns" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px"></div>
+      <button class="caf-reset" onclick="resetPaste()" style="width:100%">← paste different notes</button>
+    </div>
+
+    <!-- Step 3: preview -->
     <div id="rep-preview" class="hidden">
+      <button class="caf-reset" onclick="backToPick()" style="width:100%;margin-bottom:14px">← back to selection</button>
       <div class="rep-pre" id="rep-pre"></div>
       <div class="rep-actions">
         <button class="rep-act-btn" id="rep-share-btn" onclick="shareReport()">↑ share .md</button>
         <button class="rep-act-btn" id="rep-copy-btn" onclick="copyReport()">copy</button>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -922,28 +981,224 @@ function renderHistory() {
 
 // ── Reports ───────────────────────────────────────────────────────────────────
 let _repContent = '', _repFilename = '';
+let _parsedData = null; // map of { 'YYYY-MM-DD': dayObj } from pasted notes
+let _repPickVisible = false;
 
+// ── Parse merged notes from Obsidian ─────────────────────────────────────────
+function parseMergedNotes(text) {
+  // Split on the LiCalendar date header — handles both with and without filenames
+  const parts = text.split(/\*:LiCalendar:\s*(\d{4}-\d{2}-\d{2})\*/);
+  // parts: [pre, date1, content1, date2, content2, ...]
+  const result = {};
+  for (let i = 1; i < parts.length; i += 2) {
+    const date = parts[i].trim();
+    const content = parts[i+1] || '';
+    result[date] = parseDayContent(date, content);
+  }
+  return result;
+}
+
+function tableVal(key, text) {
+  const re = new RegExp('\\|\\s*' + key + '\\s*\\|\\s*([^|\\n]*?)\\s*\\|', 'i');
+  const m = text.match(re);
+  return m ? m[1].trim() : '';
+}
+
+function parseDayContent(date, content) {
+  const d = { date, m: {}, e: {}, entries: [] };
+
+  // Morning
+  d.m.wt   = tableVal('wakeup_time',   content);
+  d.m.sl   = tableVal('sleep_hours',   content);
+  d.m.nrg  = tableVal('nrg_morning',   content);
+  d.m.mood = tableVal('mood_morning',  content);
+  d.m.wkg  = tableVal('weight_kg',     content);
+  d.m.km   = tableVal('km_walked_m',   content);
+  const csRaw = tableVal('cold_shower_s', content);
+  d.m.cs   = csRaw;
+  d.m.cs_on = csRaw === '' ? null : parseInt(csRaw) > 0 ? true : false;
+
+  // Workout
+  d.m.wo   = tableVal('workout_focus', content);
+  d.m.tkg  = tableVal('total_kg',      content);
+  d.m.tmin = tableVal('time_min',      content);
+
+  // Evening
+  d.e.kme    = tableVal('km_walked_e',   content);
+  d.e.nrg    = tableVal('nrg_evening',   content);
+  d.e.mood   = tableVal('mood_evening',  content);
+  d.e.stress = tableVal('stress',        content);
+  d.e.meds   = tableVal('meds',          content);
+  d.e.bmix   = parseInt(tableVal('blocks_mix', content)) || 0;
+
+  // Caffeine: "2c 1ed" or "-"
+  const cafStr = tableVal('caffeine', content);
+  d.e.caf_c  = parseInt((cafStr.match(/(\d+)c/) || [])[1] || 0);
+  d.e.caf_ed = parseInt((cafStr.match(/(\d+)ed/) || [])[1] || 0);
+
+  // Blocks: from the planning activity row
+  const blkMatch = content.match(/\|\s*activity\s*\|\s*([^|\n]*?)\s*\|\s*([^|\n]*?)\s*\|\s*([^|\n]*?)\s*\|/i);
+  if (blkMatch) {
+    d.e.blocks = [blkMatch[1], blkMatch[2], blkMatch[3]].map(s => s.trim()).filter(Boolean);
+  } else {
+    d.e.blocks = [];
+  }
+
+  // Journal entries: ` > HH:MM - text`
+  const entryRe = /^\s*>\s*(\d{2}:\d{2})\s*-\s*(.+)$/gm;
+  let em;
+  while ((em = entryRe.exec(content)) !== null) {
+    d.entries.push({ time: em[1], text: em[2].trim() });
+  }
+
+  return d;
+}
+
+// ── Reports UI flow ───────────────────────────────────────────────────────────
 function renderReports() {
-  const wk = isoWeekNum(TODAY), yr = TODAY.slice(2,4);
   const mon = weekMonday(TODAY), sun = dateOffset(mon, 6);
+  const wk = isoWeekNum(TODAY);
+  const [y, m] = TODAY.split('-');
   document.getElementById('rep-week-label').textContent = `wk ${String(wk).padStart(2,'0')} · ${fmtDateShort(mon)} – ${fmtDateShort(sun)}`;
-  const [y,m] = TODAY.split('-');
   document.getElementById('rep-month-label').textContent = `${MONTHS[parseInt(m)-1]} ${y}`;
-  document.getElementById('rep-preview').classList.add('hidden');
+  // Reset to step 1 but keep parsed data if already parsed
+  if (!_parsedData) {
+    showRepStep('paste');
+  } else {
+    showRepStep('pick');
+  }
 }
 
-function loadReport(type) {
-  const content = type==='weekly' ? buildWeeklyReport() : buildMonthlyReport();
+function showRepStep(step) {
+  document.getElementById('rep-step-paste').classList.toggle('hidden', step !== 'paste');
+  document.getElementById('rep-step-pick').classList.toggle('hidden', step !== 'pick');
+  document.getElementById('rep-preview').classList.toggle('hidden', step !== 'preview');
+}
+
+function parseNotes() {
+  const text = document.getElementById('rep-paste').value.trim();
+  if (!text) { toast('Nothing to parse'); return; }
+
+  const parsed = parseMergedNotes(text);
+  const count = Object.keys(parsed).length;
+  if (!count) { toast('No daily notes found'); return; }
+
+  _parsedData = parsed;
+  renderPickStep();
+  showRepStep('pick');
+}
+
+function renderPickStep() {
+  const dates = Object.keys(_parsedData).sort();
+  document.getElementById('rep-parsed-info').textContent =
+    `${dates.length} days parsed · ${fmtDateShort(dates[0])} – ${fmtDateShort(dates[dates.length-1])}`;
+
+  // Find all weeks represented
+  const weekSet = {}, monthSet = {};
+  dates.forEach(d => {
+    const wk = isoWeekNum(d);
+    const [y, m] = d.split('-');
+    const wKey = `${y}-W${String(wk).padStart(2,'0')}`;
+    const mKey = `${y}-${m}`;
+    if (!weekSet[wKey]) weekSet[wKey] = [];
+    if (!monthSet[mKey]) monthSet[mKey] = [];
+    weekSet[wKey].push(d);
+    monthSet[mKey].push(d);
+  });
+
+  // Week buttons
+  const wContainer = document.getElementById('rep-week-btns');
+  wContainer.innerHTML = '';
+  Object.entries(weekSet).sort().reverse().forEach(([wKey, wDates]) => {
+    const [y, w] = wKey.split('-W');
+    const mon = weekMonday(wDates[0]);
+    const sun = dateOffset(mon, 6);
+    const btn = document.createElement('button');
+    btn.className = 'rep-btn';
+    btn.innerHTML = `<span>wk ${w} · ${y}</span><span>${fmtDateShort(mon)} – ${fmtDateShort(sun)}</span>`;
+    btn.onclick = () => loadReportParsed('weekly', wKey);
+    wContainer.appendChild(btn);
+  });
+  if (!Object.keys(weekSet).length) wContainer.innerHTML = '<div style="color:var(--mu);font-size:11px;padding:8px 0">no weeks found</div>';
+
+  // Month buttons
+  const mContainer = document.getElementById('rep-month-btns');
+  mContainer.innerHTML = '';
+  Object.entries(monthSet).sort().reverse().forEach(([mKey]) => {
+    const [y, m] = mKey.split('-');
+    const btn = document.createElement('button');
+    btn.className = 'rep-btn';
+    btn.innerHTML = `<span>${MONTHS[parseInt(m)-1]} ${y}</span><span>${Object.keys(weekSet).filter(k=>k.startsWith(y)).length} wks</span>`;
+    btn.onclick = () => loadReportParsed('monthly', mKey);
+    mContainer.appendChild(btn);
+  });
+  if (!Object.keys(monthSet).length) mContainer.innerHTML = '<div style="color:var(--mu);font-size:11px;padding:8px 0">no months found</div>';
+}
+
+function resetPaste() {
+  _parsedData = null;
+  document.getElementById('rep-paste').value = '';
+  showRepStep('paste');
+}
+
+function backToPick() {
+  showRepStep(_parsedData ? 'pick' : 'paste');
+}
+
+// ── Load report from parsed Obsidian data ─────────────────────────────────────
+function loadReportParsed(type, key) {
+  const getDay = iso => _parsedData[iso] || {};
+
+  let content, filename;
+  if (type === 'weekly') {
+    const [y, w] = key.split('-W');
+    // Find a date in this week to anchor weekMonday
+    const anchor = Object.keys(_parsedData).find(d => isoWeekNum(d) === parseInt(w) && d.startsWith(y));
+    if (!anchor) { toast('No data for this week'); return; }
+    const mon = weekMonday(anchor);
+    const days = Array.from({length:7}, (_,i) => dateOffset(mon, i));
+    content = buildWeeklyReport(days, getDay);
+    filename = `review_${w}.${y.slice(2)}.md`;
+  } else {
+    const [y, m] = key.split('-');
+    const daysInMonth = new Date(parseInt(y), parseInt(m), 0).getDate();
+    const days = Array.from({length:daysInMonth}, (_,i) => `${y}-${m}-${String(i+1).padStart(2,'0')}`);
+    content = buildMonthlyReport(days, getDay);
+    filename = `review_${MONTHS[parseInt(m)-1]}.${y.slice(2)}.md`;
+  }
+
   _repContent = content;
-  const [y,m] = TODAY.split('-');
-  const wk = String(isoWeekNum(TODAY)).padStart(2,'0');
-  _repFilename = type==='weekly'
-    ? `review_${wk}.${TODAY.slice(2,4)}.md`
-    : `review_${MONTHS[parseInt(m)-1]}.${TODAY.slice(2,4)}.md`;
+  _repFilename = filename;
   document.getElementById('rep-pre').textContent = content;
-  document.getElementById('rep-preview').classList.remove('hidden');
+  showRepStep('preview');
 }
 
+// ── Load report from localStorage (phone-only fallback) ───────────────────────
+function loadReportLocal(type) {
+  const getDay = iso => { try { return JSON.parse(localStorage.getItem('log_'+iso)) || {}; } catch { return {}; } };
+  const [y, m] = TODAY.split('-');
+  const wk = String(isoWeekNum(TODAY)).padStart(2,'0');
+
+  let content, filename;
+  if (type === 'weekly') {
+    const mon = weekMonday(TODAY);
+    const days = Array.from({length:7}, (_,i) => dateOffset(mon, i));
+    content = buildWeeklyReport(days, getDay);
+    filename = `review_${wk}.${TODAY.slice(2,4)}.md`;
+  } else {
+    const daysInMonth = new Date(parseInt(y), parseInt(m), 0).getDate();
+    const days = Array.from({length:daysInMonth}, (_,i) => `${y}-${m}-${String(i+1).padStart(2,'0')}`);
+    content = buildMonthlyReport(days, getDay);
+    filename = `review_${MONTHS[parseInt(m)-1]}.${TODAY.slice(2,4)}.md`;
+  }
+
+  _repContent = content;
+  _repFilename = filename;
+  document.getElementById('rep-pre').textContent = content;
+  showRepStep('preview');
+}
+
+// getDayData still used by history screen
 function getDayData(iso) {
   try { return JSON.parse(localStorage.getItem('log_'+iso)) || {}; } catch { return {}; }
 }
@@ -954,49 +1209,44 @@ function avg(arr) {
   return (nums.reduce((a,b)=>a+b,0)/nums.length).toFixed(1);
 }
 
-function buildWeeklyReport() {
-  const mon = weekMonday(TODAY);
-  const days = Array.from({length:7},(_,i)=>dateOffset(mon,i));
-  const dd = days.map(getDayData);
-  const [y,mo] = TODAY.split('-');
-  const wk = String(isoWeekNum(TODAY)).padStart(2,'0');
+// ── Report builders (accept days array + getDay function) ─────────────────────
+function buildWeeklyReport(days, getDay) {
+  const dd = days.map(getDay);
+  const [y] = days[0].split('-');
+  const wk = String(isoWeekNum(days[0])).padStart(2,'0');
   const sun = days[6];
 
   const dayRow = (d, i) => {
     const m=d.m||{}, e=d.e||{};
     const dow=['mon','tue','wed','thu','fri','sat','sun'][i];
-    const dt=fmtDateShort(days[i]);
     const kmM=parseFloat(m.km)||0, kmE=parseFloat(e.kme)||0;
     const km=(m.km||e.kme)?(kmM+kmE).toFixed(1):'—';
-    return `| ${dow} ${dt} | ${m.nrg||'—'} | ${m.mood||'—'} | ${e.stress||'—'} | ${m.wkg||'—'} | ${m.sl||'—'} | ${km} |`;
+    return `| ${dow} ${fmtDateShort(days[i])} | ${m.nrg||'—'} | ${m.mood||'—'} | ${e.stress||'—'} | ${m.wkg||'—'} | ${m.sl||'—'} | ${km} |`;
   };
 
   const nrgs=dd.map(d=>d.m?.nrg||null), moods=dd.map(d=>d.m?.mood||null), stresses=dd.map(d=>d.e?.stress||null);
   const weights=dd.map(d=>d.m?.wkg||null), sleeps=dd.map(d=>d.m?.sl||null);
-  const allKm=dd.map(d=>{const m=d.m||{},e=d.e||{};return (m.km||e.kme)?((parseFloat(m.km)||0)+(parseFloat(e.kme)||0)):null;});
-  const totalKm = allKm.filter(Boolean).reduce((a,b)=>a+b,0).toFixed(1);
+  const allKm=dd.map(d=>{const m=d.m||{},e=d.e||{};return(m.km||e.kme)?((parseFloat(m.km)||0)+(parseFloat(e.kme)||0)):null;});
+  const totalKm=allKm.filter(Boolean).reduce((a,b)=>a+b,0).toFixed(1);
+  const medsDays=dd.filter(d=>d.e?.meds==='yes').length;
+  const csDays=dd.filter(d=>d.m?.cs_on===true).length;
+  const totalBmix=dd.reduce((a,d)=>a+(d.e?.bmix||0),0);
+  const totalCafC=dd.reduce((a,d)=>a+(d.e?.caf_c||0),0);
+  const totalCafEd=dd.reduce((a,d)=>a+(d.e?.caf_ed||0),0);
 
-  const medsDays = dd.filter(d=>d.e?.meds==='yes').length;
-  const csDays = dd.filter(d=>d.m?.cs_on===true).length;
-  const totalBmix = dd.reduce((a,d)=>a+(d.e?.bmix||0),0);
-  const totalCafC = dd.reduce((a,d)=>a+(d.e?.caf_c||0),0);
-  const totalCafEd = dd.reduce((a,d)=>a+(d.e?.caf_ed||0),0);
-
-  const woRows = dd.map((d,i)=>{
-    const m=d.m||{};
-    if(!m.wo) return null;
+  const woRows=dd.map((d,i)=>{
+    const m=d.m||{}; if(!m.wo) return null;
     const dow=['mon','tue','wed','thu','fri','sat','sun'][i];
-    if(m.wo==='rest') return `| ${dow} | rest | — | — |`;
-    return `| ${dow} | ${m.wo} | ${m.tkg||'—'} | ${m.tmin||'—'} |`;
+    return m.wo==='rest' ? `| ${dow} | rest | — | — |` : `| ${dow} | ${m.wo} | ${m.tkg||'—'} | ${m.tmin||'—'} |`;
   }).filter(Boolean).join('\n');
 
-  const blockCounts = {};
+  const blockCounts={};
   dd.forEach(d=>(d.e?.blocks||[]).forEach(b=>{blockCounts[b]=(blockCounts[b]||0)+1;}));
-  const blockRows = Object.entries(blockCounts).map(([b,c])=>`| ${b} | ${c} |`).join('\n') || '| — | — |';
+  const blockRows=Object.entries(blockCounts).map(([b,c])=>`| ${b} | ${c} |`).join('\n')||'| — | — |';
 
-  const allEntries = [];
+  const allEntries=[];
   dd.forEach((d,i)=>(d.entries||[]).forEach(en=>allEntries.push({date:days[i],time:en.time,text:en.text})));
-  const entryLines = allEntries.map(en=>` > ${en.time} - ${en.text}`).join('\n\n') || '—';
+  const entryLines=allEntries.map(en=>` > ${en.time} - ${en.text}`).join('\n\n')||'—';
 
   return (
 `*weekly review — week ${wk} · ${y}*
@@ -1025,14 +1275,14 @@ ${days.map((d,i)=>dayRow(dd[i],i)).join('\n')}
 
 | day | focus | kg | min |
 | --- | ----- | -- | --- |
-${woRows || '| — | — | — | — |'}
+${woRows||'| — | — | — | — |'}
 
 ## music
 
 | metric | total |
 | --- | --- |
 | mixing blocks | ${totalBmix} |
-| block types completed | |
+| block types | |
 ${blockRows}
 
 ## journal entries
@@ -1040,17 +1290,15 @@ ${blockRows}
 ${entryLines}`);
 }
 
-function buildMonthlyReport() {
-  const [y, mo] = TODAY.split('-');
-  const monthIdx = parseInt(mo) - 1;
-  const daysInMonth = new Date(parseInt(y), monthIdx+1, 0).getDate();
-  const days = Array.from({length:daysInMonth},(_,i)=>`${y}-${mo}-${String(i+1).padStart(2,'0')}`);
-  const dd = days.map(getDayData);
+function buildMonthlyReport(days, getDay) {
+  const dd = days.map(getDay);
+  const [y, mo] = days[0].split('-');
+  const monthIdx = parseInt(mo)-1;
+  const daysInMonth = days.length;
 
-  // Group by week
-  const weeks = {};
+  const weeks={};
   days.forEach((d,i)=>{
-    const wk = isoWeekNum(d);
+    const wk=isoWeekNum(d);
     if(!weeks[wk]) weeks[wk]=[];
     weeks[wk].push({date:d,data:dd[i]});
   });
@@ -1060,7 +1308,7 @@ function buildMonthlyReport() {
   const stresses=dd.map(d=>d.e?.stress||null).filter(Boolean);
   const weights=dd.map(d=>d.m?.wkg||null).filter(Boolean);
   const sleeps=dd.map(d=>d.m?.sl||null).filter(Boolean);
-  const allKm=dd.map(d=>{const m=d.m||{},e=d.e||{};return (m.km||e.kme)?((parseFloat(m.km)||0)+(parseFloat(e.kme)||0)):null;}).filter(Boolean);
+  const allKm=dd.map(d=>{const m=d.m||{},e=d.e||{};return(m.km||e.kme)?((parseFloat(m.km)||0)+(parseFloat(e.kme)||0)):null;}).filter(Boolean);
   const totalKm=allKm.reduce((a,b)=>a+b,0).toFixed(1);
   const medsDays=dd.filter(d=>d.e?.meds==='yes').length;
   const loggedDays=dd.filter(d=>d.m?.wt||d.e?.kme).length;
@@ -1069,7 +1317,7 @@ function buildMonthlyReport() {
   const totalCafC=dd.reduce((a,d)=>a+(d.e?.caf_c||0),0);
   const totalCafEd=dd.reduce((a,d)=>a+(d.e?.caf_ed||0),0);
 
-  const woCounts = {};
+  const woCounts={};
   dd.forEach(d=>{if(d.m?.wo){const w=d.m.wo;woCounts[w]=(woCounts[w]||0)+1;}});
   const woRows=Object.entries(woCounts).map(([w,c])=>`| ${w} | ${c} |`).join('\n')||'| — | — |';
 
@@ -1077,7 +1325,7 @@ function buildMonthlyReport() {
   dd.forEach(d=>(d.e?.blocks||[]).forEach(b=>{blockCounts[b]=(blockCounts[b]||0)+1;}));
   const blockRows=Object.entries(blockCounts).map(([b,c])=>`| ${b} | ${c} |`).join('\n')||'| — | — |';
 
-  const weekRows = Object.entries(weeks).map(([wk,wdays])=>{
+  const weekRows=Object.entries(weeks).map(([wk,wdays])=>{
     const wdd=wdays.map(x=>x.data);
     const wNrg=avg(wdd.map(d=>d.m?.nrg||null).filter(Boolean));
     const wMood=avg(wdd.map(d=>d.m?.mood||null).filter(Boolean));
@@ -1121,7 +1369,7 @@ ${woRows}
 | metric | total |
 | --- | --- |
 | mixing blocks | ${totalBmix} |
-| block types completed | |
+| block types | |
 ${blockRows}`);
 }
 
