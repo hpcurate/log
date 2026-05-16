@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="LOG">
@@ -519,6 +519,10 @@
     <div class="data-stat"><span class="data-stat-k">Earliest day</span><span class="data-stat-v" id="ds-earliest">—</span></div>
     <div class="data-warn" style="margin-top:16px">
       Data is stored locally on this device only. Clearing Safari data or switching devices will remove it permanently. No backup exists unless you export your daily notes.
+    </div>
+    <div class="data-stat" style="margin-bottom:8px">
+      <span class="data-stat-k">Reload page</span>
+      <button onclick="window.location.reload()" style="background:var(--s2);border:1px solid var(--bd);border-radius:3px;color:var(--tx);font:400 10px/1 var(--mono);letter-spacing:.08em;padding:9px 13px;cursor:pointer">reload</button>
     </div>
     <button class="btn btn-danger" onclick="openDeleteModal()" style="margin-top:8px">Delete all data</button>
   </div>
