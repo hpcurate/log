@@ -566,7 +566,7 @@ function fmtDateLong(iso) {
 }
 function fmtFilename(iso) {
   const [y,m,d] = iso.split('-');
-  return `${d}.${m}.${y.slice(2)}`;
+  return `${y.slice(2)}.${m}.${d}`;
 }
 
 const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
@@ -1162,13 +1162,13 @@ function loadReportParsed(type, key) {
     const mon = weekMonday(anchor);
     const days = Array.from({length:7}, (_,i) => dateOffset(mon, i));
     content = buildWeeklyReport(days, getDay);
-    filename = `review_${w}.${y.slice(2)}.md`;
+    filename = `review_weekly_${y.slice(2)}.${w}.md`;
   } else {
     const [y, m] = key.split('-');
     const daysInMonth = new Date(parseInt(y), parseInt(m), 0).getDate();
     const days = Array.from({length:daysInMonth}, (_,i) => `${y}-${m}-${String(i+1).padStart(2,'0')}`);
     content = buildMonthlyReport(days, getDay);
-    filename = `review_${MONTHS[parseInt(m)-1]}.${y.slice(2)}.md`;
+    filename = `review_monthly_${y.slice(2)}.${m}.md`;
   }
 
   _repContent = content;
@@ -1188,12 +1188,12 @@ function loadReportLocal(type) {
     const mon = weekMonday(TODAY);
     const days = Array.from({length:7}, (_,i) => dateOffset(mon, i));
     content = buildWeeklyReport(days, getDay);
-    filename = `review_${wk}.${TODAY.slice(2,4)}.md`;
+    filename = `review_weekly_${TODAY.slice(2,4)}.${wk}.md`;
   } else {
     const daysInMonth = new Date(parseInt(y), parseInt(m), 0).getDate();
     const days = Array.from({length:daysInMonth}, (_,i) => `${y}-${m}-${String(i+1).padStart(2,'0')}`);
     content = buildMonthlyReport(days, getDay);
-    filename = `review_${MONTHS[parseInt(m)-1]}.${TODAY.slice(2,4)}.md`;
+    filename = `review_monthly_${TODAY.slice(2,4)}.${m}.md`;
   }
 
   _repContent = content;
