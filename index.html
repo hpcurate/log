@@ -544,13 +544,16 @@
 
 <script>
 // ── Dates ─────────────────────────────────────────────────────────────────────
-const REAL_TODAY = new Date().toISOString().split('T')[0];
+function localISO(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+const REAL_TODAY = localISO(new Date());
 let TODAY = REAL_TODAY;
 
 function dateOffset(base, n) {
   const d = new Date(base + 'T00:00:00');
   d.setDate(d.getDate() + n);
-  return d.toISOString().split('T')[0];
+  return localISO(d);
 }
 
 function shiftDate(delta) { TODAY = dateOffset(TODAY, delta); initData(); refreshHome(); }
